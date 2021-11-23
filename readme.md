@@ -20,3 +20,7 @@ sudo xcode-select --install
 <!-- - `pg@">=8.4.1"` - PostgresQL greater or equal to version 8.4.1
 - `sequelize@5` - Sequelize
 - `sequelize-cli@5` - use `sequelize` in the command line -->
+
+# Mongo set up
+
+https://www.youtube.com/watch?v=4crXgQZG4W8
