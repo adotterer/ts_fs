@@ -3,8 +3,8 @@ sudo xcode-select --install
 
 ## Planned Dependencies:
 
-- body parser
-- [ ] `bcryptjs` - password hashing
+- [x] `body-parser` - body parser
+- [x] `bcryptjs` - password hashing
 - `cookie-parser` - parsing cookies from requests
 - `cors` - CORS
 - `csurf` - CSRF protection
