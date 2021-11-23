@@ -5,18 +5,18 @@ sudo xcode-select --install
 
 - [x] `body-parser` - body parser
 - [x] `bcryptjs` - password hashing
-- `cookie-parser` - parsing cookies from requests
-- `cors` - CORS
-- `csurf` - CSRF protection
-- `dotenv` - load environment variables into Node.js from a `.env` file
-- `express` - Express
-- `express-async-handler` - handling `async` route handlers
-- `express-validator` - validation of request bodies
-- `faker` - random seeding library
-- `helmet` - security middleware
-- `jsonwebtoken` - JWT
-- `morgan` - logging information about server requests/responses
-- `per-env` - use environment variables for starting app differently
-- `pg@">=8.4.1"` - PostgresQL greater or equal to version 8.4.1
+- [x] `cookie-parser` - parsing cookies from requests
+- [x] `cors` - CORS
+- [x] `csurf` - CSRF protection
+- [x] `dotenv` - load environment variables into Node.js from a `.env` file
+- [x] `express` - Express
+- [x] `express-async-handler` - handling `async` route handlers
+- [x] `express-validator` - validation of request bodies
+- [x] `faker` - random seeding library
+- [x] `helmet` - security middleware
+- [x] `jsonwebtoken` - JWT
+- [x] `morgan` - logging information about server requests/responses
+- [x] `per-env` - use environment variables for starting app differently
+<!-- - `pg@">=8.4.1"` - PostgresQL greater or equal to version 8.4.1
 - `sequelize@5` - Sequelize
-- `sequelize-cli@5` - use `sequelize` in the command line
+- `sequelize-cli@5` - use `sequelize` in the command line -->
