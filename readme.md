@@ -17,6 +17,8 @@ sudo xcode-select --install
 - [x] `jsonwebtoken` - JWT
 - [x] `morgan` - logging information about server requests/responses
 - [x] `per-env` - use environment variables for starting app differently
+- [] `jest` - jest
+
 <!-- - `pg@">=8.4.1"` - PostgresQL greater or equal to version 8.4.1
 - `sequelize@5` - Sequelize
 - `sequelize-cli@5` - use `sequelize` in the command line -->
