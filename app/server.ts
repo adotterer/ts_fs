@@ -26,9 +26,12 @@ app.get( "/test", (req,res ) => {
   res.send({msg: "Hello world!"});
 });
 
-app.get("/test/:id", (req, res) => {
+app.get("/test/:id", async (req, res) => {
   const { id } = req.params;
-  
+  console.log(id, "id!")
+  const foundRow = await TestModel.findById(id)
+  res.send(foundRow)
+
 })
 
 const studentSchema = new mongoose.Schema({
