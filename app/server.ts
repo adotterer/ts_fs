@@ -2,7 +2,8 @@ import express from "express";
 import { colorConsoleLog } from "./console";
 import {connectDb} from "./db"
 import bodyParser from "body-parser";
-import mongoose  from "mongoose"
+import mongoose from "mongoose";
+import cuid from 'cuid';
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -19,7 +20,7 @@ const studentSchema = new mongoose.Schema({
 const Student = mongoose.model('student', studentSchema)
 app.post("/student", async (req, res) => {
   const student = await Student.create({ name: "Andrew" });
-  console.log("student --->", student);
+  console.log(cuid())
   res.send(student)
 })
 
