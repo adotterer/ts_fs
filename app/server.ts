@@ -4,6 +4,7 @@ import cors from "cors";
 import csurf from "csurf";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
+import routes from "./routes"
 import { colorConsoleLog } from "./console";
 import {connectDb} from "./db"
 import bodyParser from "body-parser";
@@ -33,6 +34,8 @@ app.use(
     }
   })
 );
+
+app.use(routes);
 
 const testSchema = new mongoose.Schema(
   {
@@ -65,13 +68,12 @@ const port = process.env.PORT || 8080;
 
 export const start = async () => {
   try {
-    await connectDb().catch(e => console.log(e));
+    await connectDb();
     app.listen(port, () => {
         colorConsoleLog(`Server started at http://localhost:${port}`);
     });
   } catch (e) {
-    console.log(e.message)
-    console.error(e)
+    console.error(e);
   }
 }
 
