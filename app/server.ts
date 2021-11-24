@@ -9,8 +9,8 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.get( "/", (req,res ) => {
-    res.send("Hello world!");
+app.get( "/test", (req,res ) => {
+  res.send({msg: "Hello world!"});
 });
 
 const studentSchema = new mongoose.Schema({
@@ -42,3 +42,5 @@ export const start = async () => {
     console.error(e)
   }
 }
+
+export default app;
