@@ -8,7 +8,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.get( "/", ( req, res ) => {
+app.get( "/", (req,res ) => {
     res.send("Hello world!");
 });
 
@@ -20,15 +20,13 @@ const Student = mongoose.model('student', studentSchema)
 app.post("/student", async (req, res) => {
   const student = await Student.create({ name: "Andrew" });
   console.log("student --->", student);
+  res.send(student)
 })
 
 app.post("/", (req, res) => {
     console.log(req.body)
     res.send("hi")
 })
-
-
-
 
 
 const port = 8080;
