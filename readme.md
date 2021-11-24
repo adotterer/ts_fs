@@ -26,3 +26,7 @@ sudo xcode-select --install
 # Mongo set up
 
 https://www.youtube.com/watch?v=4crXgQZG4W8
+
+# Test in Development
+
+`npm run test -- --watch`

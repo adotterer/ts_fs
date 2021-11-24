@@ -6,6 +6,7 @@ declare global {
       PORT?: string;
       JWT_SECRET: string;
       JWT_EXPIRES_IN: string;
+      ENVIRONMENT: 'production' | 'development';
     }
   }
 }
