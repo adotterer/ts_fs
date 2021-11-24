@@ -9,15 +9,33 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+
+const testSchema = new mongoose.Schema(
+  {
+    username: {
+      type: String,
+      required: true
+    }
+  },
+   {timestamps: true}
+)
+
+export const TestModel = mongoose.model('test', testSchema)
+
 app.get( "/test", (req,res ) => {
   res.send({msg: "Hello world!"});
 });
+
+app.get("/test/:id", (req, res) => {
+  const { id } = req.params;
+  
+})
 
 const studentSchema = new mongoose.Schema({
   name: String
 });
 
-const Student = mongoose.model('student', studentSchema)
+const Student = mongoose.model('student', studentSchema);
 app.post("/student", async (req, res) => {
   const student = await Student.create({ name: "Andrew" });
   console.log(cuid())
