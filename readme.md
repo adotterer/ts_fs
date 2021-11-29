@@ -23,7 +23,7 @@ sudo xcode-select --install
 - `sequelize@5` - Sequelize
 - `sequelize-cli@5` - use `sequelize` in the command line -->
 
-# Mongo set up for Mac Catalina +
+# Mongo set up for Mac Catalinae+
 
 https://www.youtube.com/watch?v=4crXgQZG4W8
 
