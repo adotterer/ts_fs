@@ -71,7 +71,7 @@ app.get("/test/:id", async (req, res) => {
 })
 
 app.post("/", (req, res) => {
-    console.log(req.body)
+    console.log(req.body, "req.body")
     res.send("hi")
 })
 
