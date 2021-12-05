@@ -38,6 +38,14 @@ app.use(
   })
 );
 
+// https://stackoverflow.com/questions/65828687/how-to-set-csurf-express-middleware-up-to-work-with-postman/66338080
+
+app.use((req, res, next) => {
+  res.cookie('XSRF-TOKEN', req.csrfToken())
+  next()
+})
+
+
 app.use(routes);
 
 const testSchema = new mongoose.Schema(
