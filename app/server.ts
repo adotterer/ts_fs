@@ -11,6 +11,9 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cuid from 'cuid';
 
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 const isProduction = process.env.ENVIRONMENT === 'production'
 const app = express();
 if (!isProduction) {
@@ -64,12 +67,13 @@ app.post("/", (req, res) => {
     res.send("hi")
 })
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT;
 
 export const start = async () => {
   try {
     await connectDb();
-    app.listen(port, () => {
+    app.listen(process.env.PORT, () => {
+        console.log(process.env.PORT)
         colorConsoleLog(`Server started at http://localhost:${port}`);
     });
   } catch (e) {
