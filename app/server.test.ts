@@ -14,7 +14,6 @@ afterEach((done) => {
 
 test("GET /test", async () => {
   const testRow = await TestModel.create({ username: "ColdBoyWinter" });
-  // console.log(testRow.id)
 
   await supertest(app).get("/test")
     .expect(200)
