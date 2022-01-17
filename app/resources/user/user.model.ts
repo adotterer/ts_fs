@@ -1,7 +1,16 @@
-import mongoose from 'mongoose';
+import mongoose, {Schema, Document} from 'mongoose';
 import bcrypt from 'bcryptjs';
 
-const userSchema = new mongoose.Schema(
+
+export interface IUser extends Document {
+    username: string,
+    email: string, 
+    hashedPassword: string,
+    firstName?: string,
+    lastName?: string
+}
+
+const userSchema = new Schema<IUser>(
   {
     username: {
       type: String,
@@ -13,7 +22,7 @@ const userSchema = new mongoose.Schema(
       trim: true,
       required: true
     },
-    hasedPassword: {
+    hashedPassword: {
       type: String,
       required: true
     },
@@ -32,4 +41,4 @@ const userSchema = new mongoose.Schema(
   {timestamps: true}
 )
 
-module.exports = mongoose.model("User", userSchema)
+export const UserModel = mongoose.model("User", userSchema)
