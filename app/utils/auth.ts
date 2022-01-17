@@ -7,3 +7,12 @@ export const newToken = (user: IUser) => {
         expiresIn: process.env.JWT_EXPIRES_IN
     });
 }
+
+export const verifyToken = (token: String) => {
+    return new Promise((resolve, reject) => {
+        jwt.verify(token, process.env.JWT_SECRET, (err, payload) => {
+            if (err) return reject(err);
+            resolve(payload)
+        })
+    })
+}
