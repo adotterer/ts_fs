@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "types": ["jest", "node", "@types/jest"],
         "module": "commonjs",
         "esModuleInterop": true,
         "target": "es6",
@@ -15,6 +16,7 @@
         }
     },
     "include": [
-        "*"
+        "*", 
+        "*/__tests__/*"
     ]
 }

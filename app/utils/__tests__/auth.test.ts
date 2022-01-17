@@ -1,4 +1,5 @@
 import {newToken, verifyToken} from "../auth";
+import jwt from "jsonwebtoken";
 // import { UserModel as User } from "../resources/user/user.model";
 
 describe("Authenication:", () => {
