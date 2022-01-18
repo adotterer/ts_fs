@@ -66,7 +66,8 @@ describe("Authenication:", () => {
                     return this
                 },
                 async send(result: any) {
-                    let user = await verifyToken(result.token)
+                    let token = "token" in result ? result.token : ""
+                    let user = await verifyToken(token)
                     if(typeof user !== "string" && "id" in user) {
                         user = await User.findById(user.id)
                         .lean()
@@ -77,7 +78,8 @@ describe("Authenication:", () => {
                     };
                     
                 }
-            }
+            } as Response
+            await signup(req, res);
 
         })
     })
