@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import express, {Request, Response, NextFunction} from "express";
 import { config } from "process";
 import { IUser } from "../resources/user/user.model"
 
@@ -17,7 +18,11 @@ export const verifyToken = (token: string) => {
     })
 }
 
-export const signup = () => {}
+export const signup = async (req: Request, res: Response, next?: NextFunction) => {
+    if(!req.body.email || !req.body.email) {
+        return res.status(400).send({message: "Email & password required"})
+    }
+}
 
 export const signin = () => {}
 

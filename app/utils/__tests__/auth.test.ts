@@ -1,6 +1,8 @@
 import {newToken, signup, verifyToken} from "../auth";
 import jwt from "jsonwebtoken";
 import * as dotenv from 'dotenv';
+import express, {Request, Response, NextFunction} from "express";
+
 dotenv.config();
 // import { UserModel as User } from "../resources/user/user.model";
 
@@ -35,7 +37,7 @@ describe("Authenication:", () => {
         test('requires email and password', async () => {
             expect.assertions(2);
 
-            const req = { body: {} };
+            const req = { body: {} } as Request;
             const res = {
                 status(status: number) {
                     expect(status).toBe(400)
@@ -44,7 +46,7 @@ describe("Authenication:", () => {
                 send(result: any) {
                     expect(typeof result.message).toBe("string");
                 }
-            }
+            } as Response
             await signup(req,res)
         })
     })
