@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import express, {Request, Response, NextFunction} from "express";
 import { config } from "process";
-import { IUser } from "../resources/user/user.model"
+import { IUser, UserModel as User} from "../resources/user/user.model"
 
 export const newToken = (userId: string) => {
     return jwt.sign({id: userId}, process.env.JWT_SECRET, {
@@ -21,6 +21,17 @@ export const verifyToken = (token: string) => {
 export const signup = async (req: Request, res: Response, next?: NextFunction) => {
     if(!req.body.email || !req.body.email) {
         return res.status(400).send({message: "Email & password required"})
+    }
+
+    try {
+        const user = await User.create(req.body);
+        console.log(user.id, "---- user id".padStart(30,"-"))
+        const token = newToken(user.id);
+        return res.status(201).send(token);
+
+    } catch (e) {
+        console.error(e);
+        return res.status(400).end();
     }
 }
 
