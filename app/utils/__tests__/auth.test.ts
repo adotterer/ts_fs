@@ -2,9 +2,10 @@ import {newToken, signup, verifyToken} from "../auth";
 import jwt from "jsonwebtoken";
 import * as dotenv from 'dotenv';
 import mongoose from "mongoose"
+import cuid from "cuid";
 import express, {Request, Response, NextFunction} from "express";
 import { IUser, UserModel as User} from "../../resources/user/user.model"
-import { removeListener } from "process";
+
 dotenv.config();
 // import { UserModel as User } from "../resources/user/user.model";
 
@@ -13,41 +14,30 @@ beforeEach(async () => {
         useNewUrlParser: true,
         autoIndex: true
     };
-    // function clearDB() {
-    //     return Promise.all(_.map(mongoose.connection.collections, c => remove(c)))
-    //   }
-   const {drivers} = mongoose.connection.collections;
    
-    // function clearDB() {
-    //   return Promise.all(_.map(mongoose.connection.collections, (c: any) => remove(c)))
-    // }
     if (mongoose.connection.readyState === 0) {
       try {
   
-        await mongoose.connect("mongodb://127.0.0.1:27017/JestDB_having_funn", 
+        await mongoose.connect("mongodb://127.0.0.1:27017/auth_test" + cuid(), 
         options);
         await User.deleteMany();
         await User.init()
-        // await clearDB();
-        // await Promise.all(Object.keys(models).map(name => models[name].init()))
         } catch(e) {
           console.error(e);
           throw e
         }
     }
-  
   });
   
-  afterEach(async () => {
+afterEach(async () => {
     await mongoose.connection.db.dropDatabase(() => {
-      mongoose.connection.close()
+        mongoose.connection.close()
     });
+
     await mongoose.disconnect();
+});
 
-  
-  });
-
-  afterAll(done => done())
+afterAll(done => done())
 
 describe("Authenication:", () => {
     describe("newToken", () => {

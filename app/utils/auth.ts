@@ -25,7 +25,6 @@ export const signup = async (req: Request, res: Response, next?: NextFunction) =
 
     try {
         const user = await User.create(req.body);
-        console.log(user.id, "---- user id".padStart(30,"-"))
         const token = newToken(user.id);
         return res.status(201).send(token);
 
