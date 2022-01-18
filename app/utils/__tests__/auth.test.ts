@@ -83,12 +83,10 @@ describe("Authenication:", () => {
 
             
             await signup(req, res);
-            const user = await User.find({email: 'cbw@tinkieinc.com'})
-                .lean()
+            const user = await User.findOne({email: 'cbw@tinkieinc.com'})
                 .exec()
             console.log(user, "user!!")
-            expect(user.email).toBe('cbw@tinkieinc.com')
-            // expect(res.send).toHaveBeenCalledWith(user.id)
+            expect(res.send).toHaveBeenCalledWith(user.id)
 
         })
     })
