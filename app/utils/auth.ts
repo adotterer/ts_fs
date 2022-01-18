@@ -9,7 +9,7 @@ export const newToken = (userId: string) => {
 }
 
 export const verifyToken = (token: string) => {
-    return new Promise((resolve, reject) => {
+    return new Promise<string | jwt.JwtPayload>((resolve, reject) => {
         jwt.verify(token, process.env.JWT_SECRET, (err, payload) => {
             if (err) return reject(err);
             resolve(payload)

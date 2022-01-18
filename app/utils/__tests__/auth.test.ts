@@ -4,6 +4,7 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 // import { UserModel as User } from "../resources/user/user.model";
 
+
 describe("Authenication:", () => {
     describe("newToken", () => {
         test("creates new jwt from user id", () => {
@@ -15,6 +16,19 @@ describe("Authenication:", () => {
             } else {
                 fail("expected type JwtPayload and received type " + typeof user)
             };
+        })
+    })
+    describe('verifyToken', () => {
+        test('validates jwt and returns payload', async () => {
+            const id = 1234;
+            const token = jwt.sign({id}, process.env.JWT_SECRET);
+            const user = await verifyToken(token);
+            if(typeof user !== "string" && "id" in user) {
+                expect(user.id).toBe(id)
+            } else {
+                fail("expected type JwtPayload and received type " + typeof user)
+            };
+ 
         })
     })
 })
