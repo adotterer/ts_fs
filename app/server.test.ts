@@ -17,7 +17,7 @@ beforeEach(async () => {
   // }
   if (mongoose.connection.readyState === 0) {
     try {
-      
+
       await mongoose.connect("mongodb://127.0.0.1:27017/JestDB_CBW");
       await TestModel.init()
       // await clearDB();
@@ -26,7 +26,7 @@ beforeEach(async () => {
         console.error(e);
         throw e
       }
-  } 
+  }
 
 });
 

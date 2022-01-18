@@ -35,6 +35,6 @@ export const signup = async (req: Request, res: Response, next?: NextFunction) =
     }
 }
 
-export const signin = () => {}
+// export const signin = () => {}
 
-export const protect = () => {}
+// export const protect = () => {}

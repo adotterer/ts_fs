@@ -30,7 +30,7 @@ describe("Authenication:", () => {
             } else {
                 fail("expected type JwtPayload and received type " + typeof user)
             };
- 
+
         })
     })
     describe('signup', () => {
@@ -53,14 +53,14 @@ describe("Authenication:", () => {
         test('creates user and sends new token from user', async () => {
             expect.assertions(2);
             let token: string
-            const req = { 
+            const req = {
                 body: {
-                    email: 'cbw@tinkieinc.com', 
-                    password: 'password', 
+                    email: 'cbw@tinkieinc.com',
+                    password: 'password',
                     username: "cbw"
                 }
             } as Request
-            const res = <Response>{
+            const res = {
                 status(status: number) {
                     expect(status).toBe(201);
                     return this
@@ -68,13 +68,13 @@ describe("Authenication:", () => {
                 send(result) {
                     token = result.token
                 }
-            }
+            } as Response
                 // status(status: number) {
                 //     expect(status).toBe(201);
                 //     return this
                 // },
                 // send(result) {
-                    
+
                 //         let token = "token" in result ? result.token : ""
                 //         verifyToken(token).then((user) => {
                 //             if(typeof user !== "string" && "id" in user) {
@@ -86,10 +86,10 @@ describe("Authenication:", () => {
                 //                 fail("expected type JwtPayload and received type " + typeof user)
                 //             };
                 //         })
-                        
-            
 
-            
+
+
+
             await signup(req, res);
             const user = await User.findOne({email: 'cbw@tinkieinc.com'})
                 .exec()

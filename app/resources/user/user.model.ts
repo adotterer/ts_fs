@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 
 export interface IUser {
     username: string,
-    email: string, 
+    email: string,
     password: string,
     firstName?: string,
     lastName?: string

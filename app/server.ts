@@ -16,12 +16,13 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 const isProduction = process.env.ENVIRONMENT === 'production'
+console.log(isProduction, "is Production?")
 const app = express();
+app.use(morgan("dev"));
+app.use(cookieParser());
 if (!isProduction) {
   app.use(cors());
 }
-app.use(morgan("dev"));
-app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -71,7 +72,7 @@ app.get("/test/:id", async (req, res) => {
   res.send(foundRow)
 })
 
-app.post("signup", signup);
+app.post("/signup", signup);
 
 const port = process.env.PORT;
 
