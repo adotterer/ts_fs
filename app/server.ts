@@ -10,6 +10,7 @@ import {connectDb} from "./db"
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cuid from 'cuid';
+import {signup} from "./utils/auth"
 
 import * as dotenv from 'dotenv';
 dotenv.config();
@@ -69,6 +70,8 @@ app.get("/test/:id", async (req, res) => {
   const foundRow = await TestModel.findById(id)
   res.send(foundRow)
 })
+
+app.post("signup", signup);
 
 const port = process.env.PORT;
 

@@ -51,8 +51,8 @@ describe("Authenication:", () => {
         })
 
         test('creates user and sends new token from user', async () => {
-            // expect.assertions(2);
-
+            expect.assertions(2);
+            let token: string
             const req = { 
                 body: {
                     email: 'cbw@tinkieinc.com', 
@@ -60,7 +60,15 @@ describe("Authenication:", () => {
                     username: "cbw"
                 }
             } as Request
-            const res = <Response>{}
+            const res = <Response>{
+                status(status: number) {
+                    expect(status).toBe(201);
+                    return this
+                },
+                send(result) {
+                    token = result.token
+                }
+            }
                 // status(status: number) {
                 //     expect(status).toBe(201);
                 //     return this
@@ -86,7 +94,7 @@ describe("Authenication:", () => {
             const user = await User.findOne({email: 'cbw@tinkieinc.com'})
                 .exec()
             console.log(user, "user!!")
-            expect(res.send).toHaveBeenCalledWith(user.id)
+            expect(token).toBe(user.id)
 
         })
     })
