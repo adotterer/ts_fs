@@ -31,4 +31,9 @@ describe("Authenication:", () => {
  
         })
     })
+    describe('signup', () => {
+        test('requires email and password', async () => {
+            expect.assertions(2);
+        })
+    })
 })
