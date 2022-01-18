@@ -3,25 +3,27 @@ import jwt from "jsonwebtoken";
 import * as dotenv from 'dotenv';
 import mongoose from "mongoose"
 import cuid from "cuid";
-import express, {Request, Response, NextFunction, response} from "express";
+import {Request, Response, NextFunction} from "express";
 import { IUser, UserModel as User} from "../../resources/user/user.model"
 
 dotenv.config();
-// import { UserModel as User } from "../resources/user/user.model";
 
 beforeEach(async () => {
     const options = {
         useUnifiedTopology: true,
         useNewUrlParser: true,
-        autoIndex: true, 
+        autoIndex: true,
     };
 
     if (mongoose.connection.readyState === 0) {
       try {
-
-        await mongoose.connect("mongodb://127.0.0.1:27017/auth_test" + cuid());
-        await User.deleteMany();
+        await mongoose.connect("mongodb://127.0.0.1:27017/auth_test" + cuid(), options);
         await User.init()
+        await User.create({
+                email: 'email@email.com',
+                password: 'password',
+                username: 'rosie'
+                });
         } catch(e) {
           console.error(e);
           throw e
@@ -30,6 +32,7 @@ beforeEach(async () => {
   });
 
 afterEach(async () => {
+    await User.deleteMany().exec()
     await mongoose.connection.db.dropDatabase(() => {
         mongoose.connection.close()
     });
@@ -61,7 +64,6 @@ describe("Authenication:", () => {
             } else {
                 fail("expected type JwtPayload and received type " + typeof user)
             };
-
         })
     })
     describe('signup', () => {
@@ -106,38 +108,26 @@ describe("Authenication:", () => {
                 if(typeof tokenObj !== "string" && "id" in tokenObj) {
                     expect(tokenObj.id).toBe(user.id);
                 }
-        })
-        test('signup with duplicate emails sends error response', async () => {
-
-            let message: string;
-            let statusNum: number
+        });
+        test("should not allow duplicate emails", async () => {
+            expect.assertions(2);
             const req = {
                 body: {
-                email: 'cbw@tinkieinc.com',
+                email: 'email@email.com',
                 password: 'password',
-                username: "cbw"
+                username: "rosie"
                 }
             } as Request
             const res = {
                 status(status: number) {
-                    statusNum = status;
-                    console.log("<<<<status>>>>", status)
+                    expect(status).toBe(400);
                     return this;
                 },
                 send(result: any) {
-                    message = result;
+                    expect(result).toBe("This email is already in use")
                 }
-
             } as Response
-
-                await signup(req, res);
-                await signup(req, res);
-                const allUsers = await User.find().exec();
-                console.log(allUsers, "all users!!!!!!")
-                expect(message).toBe("Email, username, & password required")
-
+            await signup(req, res);
         })
     })
-
-
 })
