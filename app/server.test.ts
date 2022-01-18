@@ -24,7 +24,7 @@ beforeEach(async () => {
       // await Promise.all(Object.keys(models).map(name => models[name].init()))
       } catch(e) {
         console.error(e);
-        // throw e
+        throw e
       }
   } 
 

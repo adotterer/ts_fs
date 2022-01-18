@@ -70,11 +70,6 @@ app.get("/test/:id", async (req, res) => {
   res.send(foundRow)
 })
 
-app.post("/", (req, res) => {
-    console.log(req.body, "req.body")
-    res.send("hi")
-})
-
 const port = process.env.PORT;
 
 export const start = async () => {
