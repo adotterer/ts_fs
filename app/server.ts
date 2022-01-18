@@ -15,8 +15,8 @@ import {signup} from "./utils/auth"
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-const isProduction = process.env.ENVIRONMENT === 'production'
-console.log(isProduction, "is Production?")
+const isProduction = process.env.ENVIRONMENT === 'production';
+
 const app = express();
 app.use(morgan("dev"));
 app.use(cookieParser());

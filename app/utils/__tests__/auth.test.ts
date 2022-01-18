@@ -1,11 +1,53 @@
 import {newToken, signup, verifyToken} from "../auth";
 import jwt from "jsonwebtoken";
 import * as dotenv from 'dotenv';
+import mongoose from "mongoose"
 import express, {Request, Response, NextFunction} from "express";
 import { IUser, UserModel as User} from "../../resources/user/user.model"
+import { removeListener } from "process";
 dotenv.config();
 // import { UserModel as User } from "../resources/user/user.model";
 
+beforeEach(async () => {
+    const options = {
+        useNewUrlParser: true,
+        autoIndex: true
+    };
+    // function clearDB() {
+    //     return Promise.all(_.map(mongoose.connection.collections, c => remove(c)))
+    //   }
+   const {drivers} = mongoose.connection.collections;
+   
+    // function clearDB() {
+    //   return Promise.all(_.map(mongoose.connection.collections, (c: any) => remove(c)))
+    // }
+    if (mongoose.connection.readyState === 0) {
+      try {
+  
+        await mongoose.connect("mongodb://127.0.0.1:27017/JestDB_having_funn", 
+        options);
+        await User.deleteMany();
+        await User.init()
+        // await clearDB();
+        // await Promise.all(Object.keys(models).map(name => models[name].init()))
+        } catch(e) {
+          console.error(e);
+          throw e
+        }
+    }
+  
+  });
+  
+  afterEach(async () => {
+    await mongoose.connection.db.dropDatabase(() => {
+      mongoose.connection.close()
+    });
+    await mongoose.disconnect();
+
+  
+  });
+
+  afterAll(done => done())
 
 describe("Authenication:", () => {
     describe("newToken", () => {
@@ -49,53 +91,30 @@ describe("Authenication:", () => {
             } as Response
             await signup(req,res)
         })
-
-        test('creates user and sends new token from user', async () => {
+        test('creates user and sends token from user', async () => {
             expect.assertions(2);
-            let token: string
-            const req = {
+            const req = <Request>{
                 body: {
-                    email: 'cbw@tinkieinc.com',
-                    password: 'password',
-                    username: "cbw"
+                email: 'cbw@tinkieinc.com',
+                password: 'password',
+                username: "cbw"
                 }
-            } as Request
-            const res = {
+            }
+            const res = <Response>{
                 status(status: number) {
                     expect(status).toBe(201);
-                    return this
+                    return this;
                 },
-                send(result) {
-                    token = result.token
+                async send(result: any) {
+                    const user = await User.findOne({email: 'cbw@tinkieinc.com'});
+                    expect(result).toBe(user.id);
                 }
-            } as Response
-                // status(status: number) {
-                //     expect(status).toBe(201);
-                //     return this
-                // },
-                // send(result) {
-
-                //         let token = "token" in result ? result.token : ""
-                //         verifyToken(token).then((user) => {
-                //             if(typeof user !== "string" && "id" in user) {
-                //                 user = User.findById(user.id)
-                //                 .lean()
-                //                 .exec()
-                //                 expect(user.email).toBe("cbw@tinkieinc.com")
-                //             } else {
-                //                 fail("expected type JwtPayload and received type " + typeof user)
-                //             };
-                //         })
-
-
-
-
-            await signup(req, res);
-            const user = await User.findOne({email: 'cbw@tinkieinc.com'})
-                .exec()
-            console.log(user, "user!!")
-            expect(token).toBe(user.id)
-
+            }       
+            try{
+                await signup(req, res);  
+            }  catch(e) {
+                console.error(e)
+            }
         })
     })
 

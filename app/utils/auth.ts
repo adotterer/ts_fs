@@ -31,7 +31,7 @@ export const signup = async (req: Request, res: Response, next?: NextFunction) =
 
     } catch (e) {
         console.error(e);
-        return res.status(400).end();
+        return res.status(400).send(e.message.includes("duplicate") ? "This email is already in use" : "error");
     }
 }
 

@@ -19,9 +19,8 @@ beforeEach(async () => {
     try {
 
       await mongoose.connect("mongodb://127.0.0.1:27017/JestDB_CBW");
-      await TestModel.init()
-      // await clearDB();
-      // await Promise.all(Object.keys(models).map(name => models[name].init()))
+      await TestModel.deleteMany();
+      await TestModel.init();
       } catch(e) {
         console.error(e);
         throw e
