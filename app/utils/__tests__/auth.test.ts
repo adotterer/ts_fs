@@ -1,4 +1,4 @@
-import {newToken, verifyToken} from "../auth";
+import {newToken, signup, verifyToken} from "../auth";
 import jwt from "jsonwebtoken";
 import * as dotenv from 'dotenv';
 dotenv.config();
@@ -34,6 +34,18 @@ describe("Authenication:", () => {
     describe('signup', () => {
         test('requires email and password', async () => {
             expect.assertions(2);
+
+            const req = { body: {} };
+            const res = {
+                status(status: number) {
+                    expect(status).toBe(400)
+                    return this
+                },
+                send(result: any) {
+                    expect(typeof result.message).toBe("string");
+                }
+            }
+            await signup(req,res)
         })
     })
 })
