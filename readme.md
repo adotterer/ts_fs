@@ -17,7 +17,7 @@ sudo xcode-select --install
 - [x] `jsonwebtoken` - JWT
 - [x] `morgan` - logging information about server requests/responses
 - [x] `per-env` - use environment variables for starting app differently
-- [] `jest` - jest
+- [x] `jest` - jest
 
 <!-- - `pg@">=8.4.1"` - PostgresQL greater or equal to version 8.4.1
 - `sequelize@5` - Sequelize
@@ -34,3 +34,10 @@ https://www.youtube.com/watch?v=4crXgQZG4W8
 # Test in Development
 
 `npm run test -- --watch`
+
+# Test POST routes in Postman
+
+1. Make a GET request to the server
+2. copy the XSRF token set in the cookie 
+3. put token in the header `XSRF-TOKEN`
+4. any requests in between will invalidate the token, so you must repeat this pattern for every request
