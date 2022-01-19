@@ -70,8 +70,8 @@ describe("Authenication:", () => {
         test('requires email and password', async () => {
             expect.assertions(2);
 
-            const req = <Request>{ body: {} };
-            const res = <ExpressResponse>{
+            const req = { body: {} } as Request;
+            const res = {
                 status(status: number) {
                     expect(status).toBe(400)
                     return this
@@ -79,19 +79,19 @@ describe("Authenication:", () => {
                 send(result: any) {
                     expect(typeof result.message).toBe("string");
                 }
-            } 
+            } as ExpressResponse
             await signup(req,res)
         })
         test('creates user and sends token from user', async () => {
             expect.assertions(2);
-            const req = <Request>{
+            const req = {
                 body: {
                 email: 'cbw@tinkieinc.com',
                 password: 'password',
                 username: "cbw"
                 }
-            } 
-            const res = <AsyncResponse> {
+            } as Request
+            const res = {
                 status(status: number) {
                     expect(status).toBe(201);
                     return this;
@@ -105,19 +105,19 @@ describe("Authenication:", () => {
                         fail("token error")
                     }
                 }
-            } 
+            } as AsyncResponse
                 await signup(req, res);
         });
         test("should not allow duplicate emails", async () => {
             expect.assertions(2);
-            const req = <Request>{
+            const req = {
                 body: {
                 email: 'email@email.com',
                 password: 'password',
                 username: "rosie"
                 }
-            } 
-            const res = <ExpressResponse>{
+            } as Request
+            const res = {
                 status(status: number) {
                     expect(status).toBe(400);
                     return this;
@@ -125,15 +125,15 @@ describe("Authenication:", () => {
                 send(result: any) {
                     expect(result).toBe("This email is already in use")
                 }
-            }
+            } as ExpressResponse
             await signup(req, res);
         })
     })
     describe('signin', () => {
         test("requires email and password", async () => {
             expect.assertions(2);
-            const req = <Request>{ body: {}};
-            const res = <ExpressResponse>{
+            const req = { body: {}} as Request;
+            const res = {
                 status(status: number) {
                     expect(status).toBe(400)
                     return this;
@@ -141,33 +141,33 @@ describe("Authenication:", () => {
                 send(result: any) {
                     expect(typeof result.message).toBe("string")
                 }
-            }
+            } as ExpressResponse
             await signin(req, res)
         })
         test("user must be real", async () => {
             expect.assertions(2);
-            const req = <Request>{body: {
-                email: "test@notHere.com", 
+            const req = {body: {
+                email: "test@notHere.com",
                 password: "1234"
-            }}
-            const res = <ExpressResponse>{
+            }} as Request
+            const res = {
                 status(status: number) {
                     expect(status).toBe(401)
                     return this;
-                }, 
+                },
                 send(result: any) {
                     expect(typeof result.message).toBe("string")
                 }
-            }
+            } as ExpressResponse
             await signin(req, res)
         })
         test("passwords must match", async () => {
             expect.assertions(2);
-            const req = <Request>{body: {
-                email: "email@email.com", 
+            const req = {body: {
+                email: "email@email.com",
                 password: "wrongpassword"
-            }}
-            const res = <ExpressResponse>{
+            }} as Request
+            const res = {
                 status(status: number) {
                     expect(status).toBe(401);
                     return this;
@@ -175,26 +175,30 @@ describe("Authenication:", () => {
                 send(result: any) {
                     expect(typeof result.message).toBe("string")
                 }
-            }
+            } as ExpressResponse
             await signin(req, res)
         })
-        test("creates new token with valid credentials", async () => {
-            expect.assertions(2);
-            const req = <Request>{body: {
-                email: "email@email.com", 
-                password: "wrongpassword"
-            }}
-            const res = <ExpressResponse>{
-                status(status: number) {
-                    expect(status).toBe(401);
-                    return this;
-                },
-                send(result: any) {
-                    expect(typeof result.message).toBe("string")
-                }
-            }
-            await signin(req, res)
-        })
-    });
+        test("token is sent with valid credentials provided", async () =>{
+            const testUser = await User.findOne({email: "email@email.com"}).exec();
+            const userToken = newToken(testUser.id)
     
+            const req =  <Request>{
+                body: {
+                    email: "email@email.com",
+                    password: "password"
+                }
+            }
+            const res = <AsyncResponse>{
+                status(status: number) {
+                    return this;
+                },
+                async send(result: any) {
+                    expect(result.token).toBe(userToken)
+                }
+            }
+            await signin(req, res)
+        })
+
+    });
+
 })

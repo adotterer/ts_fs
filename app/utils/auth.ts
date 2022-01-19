@@ -40,22 +40,25 @@ export const signup = async (req: Request, res: Response | AsyncResponse, next?:
 }
 
 export const signin = async (req: Request, res: Response | AsyncResponse, next?: NextFunction) => {
+   
     if(!req.body.email || !req.body.password) {
         return res.status(400).send({message: "Email and password required"})
     }
 
     try {
         const user = await User.findOne({email: req.body.email}).exec();
+        // console.log(req.body.email, req.body.password, "line whatever".padStart(25, "_"))
+        // console.log(req.body.password === user.password)
         if(!user) throw new Error("No user found")
         if(user.password !== req.body.password) throw new Error("Invalid credentials")
         const token = newToken(user.id)
-        console.log(token, "token!!!")
-        throw new Error(token)
-        return res.status(200).send({token})
+        // newToken(user.id)
+        return res.status(201).send({token})
     } catch(e) {
+        console.error(e)
         return res.status(401).send(e)
     }
 
-} 
+}
 
 // export const protect = () => {}
