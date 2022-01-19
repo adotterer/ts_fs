@@ -178,5 +178,23 @@ describe("Authenication:", () => {
             }
             await signin(req, res)
         })
+        test("creates new token with valid credentials", async () => {
+            expect.assertions(2);
+            const req = <Request>{body: {
+                email: "email@email.com", 
+                password: "wrongpassword"
+            }}
+            const res = <ExpressResponse>{
+                status(status: number) {
+                    expect(status).toBe(401);
+                    return this;
+                },
+                send(result: any) {
+                    expect(typeof result.message).toBe("string")
+                }
+            }
+            await signin(req, res)
+        })
     });
+    
 })
