@@ -194,11 +194,16 @@ describe("Authenication:", () => {
                 },
                 async send(result: any) {
                     expect(result.token).toBe(userToken)
+                    return this
                 }
             }
             await signin(req, res)
         })
 
     });
+    describe("protect", () => {
+        test("b ball 2", () => {
 
+        })
+    })
 })

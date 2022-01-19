@@ -2,10 +2,14 @@ import jwt from "jsonwebtoken";
 import {Request, Response, NextFunction} from "express";
 import { UserModel as User} from "../resources/user/user.model"
 
-export type AsyncResponse = {
+export interface AsyncResponse {
     status: (status: number) => Response;
-    send: (result: any) => Promise<void>
-  }
+    send: (result: any) => Promise<void>;
+}
+
+// export interface AsyncResponse extends Response {
+//     send: (result: any) => Promise<void> | this
+// }
 
 export const newToken = (userId: string) => {
     return jwt.sign({id: userId}, process.env.JWT_SECRET, {
@@ -54,7 +58,7 @@ export const signin = async (req: Request, res: Response | AsyncResponse, next?:
         const token = newToken(user.id)
 
         return res.status(201).send({token})
-        
+
     } catch(e) {
         console.error(e)
         return res.status(401).send(e)
@@ -62,4 +66,7 @@ export const signin = async (req: Request, res: Response | AsyncResponse, next?:
 
 }
 
-// export const protect = () => {}
+export const protect = (req: Request, res: Response) => {
+  console.log(req)
+  console.log(res)
+}
