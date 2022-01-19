@@ -150,17 +150,33 @@ describe("Authenication:", () => {
                 email: "test@notHere.com", 
                 password: "1234"
             }}
-            const res = <AsyncResponse>{
+            const res = <ExpressResponse>{
                 status(status: number) {
                     expect(status).toBe(401)
                     return this;
                 }, 
-                async send(result: any) {
+                send(result: any) {
                     expect(typeof result.message).toBe("string")
                 }
             }
             await signin(req, res)
-
+        })
+        test("passwords must match", async () => {
+            expect.assertions(2);
+            const req = <Request>{body: {
+                email: "email@email.com", 
+                password: "wrongpassword"
+            }}
+            const res = <ExpressResponse>{
+                status(status: number) {
+                    expect(status).toBe(401);
+                    return this;
+                },
+                send(result: any) {
+                    expect(typeof result.message).toBe("string")
+                }
+            }
+            await signin(req, res)
         })
     });
 })

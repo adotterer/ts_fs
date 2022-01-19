@@ -45,11 +45,11 @@ export const signin = async (req: Request, res: Response | AsyncResponse, next?:
     }
 
     try {
-        const user = await User.findOne({email: req.body.email, password: req.body.password}).exec();
-        if(!user) throw new Error("no user found")
-
+        const user = await User.findOne({email: req.body.email}).exec();
+        if(!user) throw new Error("No user found")
+        if(user.password !== req.body.password) throw new Error("Invalid credentials")
+        return res.status(200).send({email: user.email})
     } catch(e) {
-        console.log(e.message)
         return res.status(401).send(e)
     }
 
