@@ -144,5 +144,10 @@ describe("Authenication:", () => {
             }
             await signin(req, res)
         })
+        test("user must be real", async () => {
+            expect.assertions(2);
+
+            
+        })
     });
 })
