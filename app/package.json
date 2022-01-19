@@ -61,5 +61,14 @@
     "mongoose": "^6.0.13",
     "morgan": "^1.10.0",
     "per-env": "^1.0.2"
+  },
+  "jest": {
+    "verbose": true,
+    "testURL": "http://localhost/",
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "dist/"
+    ],
+    "restoreMocks": true
   }
 }

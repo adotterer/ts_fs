@@ -181,14 +181,14 @@ describe("Authenication:", () => {
         test("token is sent with valid credentials provided", async () =>{
             const testUser = await User.findOne({email: "email@email.com"}).exec();
             const userToken = newToken(testUser.id)
-    
-            const req =  <Request>{
+
+            const req =  {
                 body: {
                     email: "email@email.com",
                     password: "password"
                 }
-            }
-            const res = <AsyncResponse>{
+            } as Request
+            const res = {
                 status(status: number) {
                     return this;
                 },
@@ -196,14 +196,15 @@ describe("Authenication:", () => {
                     expect(result.token).toBe(userToken)
                     return this
                 }
-            }
+            } as AsyncResponse
             await signin(req, res)
         })
 
     });
     describe("protect", () => {
-        test("b ball 2", () => {
-
+        test("looks for Bearer token in headers", () => {
+            console.log("are you freaking kidding me")
+            fail("this one isn't written yet")
         })
     })
 })

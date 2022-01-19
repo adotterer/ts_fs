@@ -44,7 +44,7 @@ export const signup = async (req: Request, res: Response | AsyncResponse, next?:
 }
 
 export const signin = async (req: Request, res: Response | AsyncResponse, next?: NextFunction) => {
-   
+
     if(!req.body.email || !req.body.password) {
         return res.status(400).send({message: "Email and password required"})
     }
@@ -54,7 +54,7 @@ export const signin = async (req: Request, res: Response | AsyncResponse, next?:
 
         if(!user) throw new Error("No user found")
         if(user.password !== req.body.password) throw new Error("Invalid credentials")
-        
+
         const token = newToken(user.id)
 
         return res.status(201).send({token})
