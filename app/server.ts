@@ -8,8 +8,6 @@ import routes from "./routes"
 import { colorConsoleLog } from "./console";
 import {connectDb} from "./db"
 import bodyParser from "body-parser";
-import mongoose from "mongoose";
-import cuid from 'cuid';
 import {signup} from "./utils/auth"
 
 import * as dotenv from 'dotenv';
@@ -49,7 +47,7 @@ app.use((req, res, next) => {
 
 app.use(routes);
 
-app.get( "/test", (req,res ) => {
+app.get( "/test", (_req,res ) => {
   res.send({msg: "Hello world!"});
 });
 
@@ -61,7 +59,6 @@ export const start = async () => {
   try {
     await connectDb();
     app.listen(process.env.PORT, () => {
-        console.log(process.env.PORT)
         colorConsoleLog(`Server started at http://localhost:${port}`);
     });
   } catch (e) {

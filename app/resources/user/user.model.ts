@@ -42,4 +42,15 @@ const userSchema = new Schema<IUser>(
   {timestamps: true}
 )
 
+userSchema.methods.checkPassword = function(password: string): Promise<boolean> {
+  const passwordHash = this.password;
+  return new Promise((resolve, reject) => {
+    bcrypt.compare(password, passwordHash, (err, same) => {
+      if(err) {
+        return reject(err)
+      }
+      resolve(same)
+    })
+  })
+}
 export const UserModel = mongoose.model("User", userSchema)
