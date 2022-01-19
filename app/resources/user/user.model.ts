@@ -1,5 +1,5 @@
 import mongoose, {Schema, Document} from 'mongoose';
-import bcrypt from 'bcryptjs';
+import bcrypt, { hashSync } from 'bcryptjs';
 
 
 export interface IUser {
@@ -42,6 +42,21 @@ const userSchema = new Schema<IUser>(
   {timestamps: true}
 )
 
+userSchema.pre("save", function(next) {
+  if(!this.isModified('password')) {
+    return next()
+  }
+
+  bcrypt.hash(this.password, 8, (err,hash) => {
+    if (err) {
+      return next(err)
+    }
+
+    this.password = hash
+    next()
+  })
+})
+
 userSchema.methods.checkPassword = function(password: string): Promise<boolean> {
   const passwordHash = this.password;
   return new Promise((resolve, reject) => {
@@ -53,4 +68,5 @@ userSchema.methods.checkPassword = function(password: string): Promise<boolean> 
     })
   })
 }
+
 export const UserModel = mongoose.model("User", userSchema)

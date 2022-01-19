@@ -7,7 +7,9 @@ describe("UserModel:", () => {
             expect(user.password).not.toBe("password")
         })
         test("should hash passwords when updated", async () => {
-            const user = await User.findOneAndUpdate({email:"email@email.com"},{password: "password2!"}, {new: true})
+            const testUser = await User.create({email: "kinopio@email.com", password: "password", username: "kinopio"})
+            const user = await User.findOneAndUpdate({email:"kinopio@email.com"},{password: "password2!"}, {new: false})
+            await user.save()
             expect(user.password).not.toBe("password2!")
         })
     })

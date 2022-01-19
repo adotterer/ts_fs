@@ -203,7 +203,7 @@ describe("Authenication:", () => {
     });
     describe("protect", () => {
         test("looks for Bearer token in headers", () => {
-            console.log("are you freaking kidding me")
+        
             fail("this one isn't written yet")
         })
     })
