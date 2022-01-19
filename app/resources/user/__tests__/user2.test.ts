@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
 import bcrypt from "bcryptjs"
 import {UserModel as User } from "../user.model";
-
+import "@types/jest"
 
 beforeEach(async () => {
     const options = {
@@ -36,9 +36,9 @@ afterEach(async () => {
 
 afterAll(done => done())
 
-describe("why are you doing this to me???", () => {
-    test("it should stop being annoying af", () => {
+describe("???", () => {
+    test("i", () => {
         
-        fail("bitch")
+        fail("b")
     })
 })
