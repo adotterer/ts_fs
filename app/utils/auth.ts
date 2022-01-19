@@ -39,11 +39,20 @@ export const signup = async (req: Request, res: Response | AsyncResponse, next?:
     }
 }
 
-export const signin = (req: Request, res: Response, next?: NextFunction) => {
+export const signin = async (req: Request, res: Response | AsyncResponse, next?: NextFunction) => {
     if(!req.body.email || !req.body.password) {
         return res.status(400).send({message: "Email and password required"})
     }
 
-}
+    try {
+        const user = await User.findOne({email: req.body.email, password: req.body.password}).exec();
+        if(!user) throw new Error("no user found")
+
+    } catch(e) {
+        console.log(e.message)
+        return res.status(401).send(e)
+    }
+
+} 
 
 // export const protect = () => {}
