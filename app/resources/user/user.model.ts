@@ -7,8 +7,10 @@ export interface IUser {
     email: string,
     password: string,
     firstName?: string,
-    lastName?: string
+    lastName?: string;
+    checkPassword: (password: string) => Promise<boolean>;
 }
+
 
 const userSchema = new Schema<IUser>(
   {
