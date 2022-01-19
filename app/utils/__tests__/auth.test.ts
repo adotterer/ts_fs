@@ -1,12 +1,10 @@
-import {newToken, signup, verifyToken, AsyncResponse} from "../auth";
+import {newToken, signup, signin, verifyToken, AsyncResponse} from "../auth";
 import jwt from "jsonwebtoken";
 import * as dotenv from 'dotenv';
 import mongoose from "mongoose"
 import cuid from "cuid";
 import {Request, Response as ExpressResponse,  NextFunction} from "express";
 import { IUser, UserModel as User} from "../../resources/user/user.model"
-
-
 
 dotenv.config();
 
@@ -132,5 +130,19 @@ describe("Authenication:", () => {
         })
     })
     describe('signin', () => {
+        test("requires email and password", async () => {
+            expect.assertions(2);
+            const req = <Request>{ body: {}};
+            const res = <ExpressResponse>{
+                status(status: number) {
+                    expect(status).toBe(400)
+                    return this;
+                },
+                send(result: any) {
+                    expect(typeof result.message).toBe("string")
+                }
+            }
+            await signin(req, res)
+        })
     });
 })

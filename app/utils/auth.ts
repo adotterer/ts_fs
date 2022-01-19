@@ -39,6 +39,11 @@ export const signup = async (req: Request, res: Response | AsyncResponse, next?:
     }
 }
 
-// export const signin = () => {}
+export const signin = (req: Request, res: Response, next?: NextFunction) => {
+    if(!req.body.email || !req.body.password) {
+        return res.status(400).send({message: "Email and password required"})
+    }
+
+}
 
 // export const protect = () => {}
