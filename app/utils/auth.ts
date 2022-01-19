@@ -47,13 +47,14 @@ export const signin = async (req: Request, res: Response | AsyncResponse, next?:
 
     try {
         const user = await User.findOne({email: req.body.email}).exec();
-        // console.log(req.body.email, req.body.password, "line whatever".padStart(25, "_"))
-        // console.log(req.body.password === user.password)
+
         if(!user) throw new Error("No user found")
         if(user.password !== req.body.password) throw new Error("Invalid credentials")
+        
         const token = newToken(user.id)
-        // newToken(user.id)
+
         return res.status(201).send({token})
+        
     } catch(e) {
         console.error(e)
         return res.status(401).send(e)
