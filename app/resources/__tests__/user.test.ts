@@ -1,7 +1,12 @@
+
+import jwt from "jsonwebtoken";
+import * as dotenv from 'dotenv';
 import mongoose from "mongoose"
-import bcrypt from "bcryptjs"
-import {UserModel as User } from "../user.model";
-import "@types/jest"
+import cuid from "cuid";
+import {Request, Response as ExpressResponse,  NextFunction} from "express";
+import {UserModel as User} from "../user/user.model"
+
+dotenv.config();
 
 beforeEach(async () => {
     const options = {
@@ -36,9 +41,10 @@ afterEach(async () => {
 
 afterAll(done => done())
 
-describe("???", () => {
-    test("i", () => {
-        
-        fail("b")
+describe("UserModel:", () => {
+    describe("user.model", () => {
+        test("creates new jwt from user id", () => {
+           fail("whomp")
+        })
     })
 })

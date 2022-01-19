@@ -69,7 +69,7 @@
     "testPathIgnorePatterns": [
       "dist/"
     ],
-    "testMatch": [ "**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)" ],
+    "testMatch": [ "**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)", "**/**/__tests__/*",  "**/**/**/__tests__/*"],
     "restoreMocks": true
   }
 }
