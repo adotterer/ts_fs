@@ -60,7 +60,6 @@ export const signin = async (req: Request, res: Response | AsyncResponse, next?:
         return res.status(201).send({token})
 
     } catch(e) {
-        console.error(e)
         return res.status(401).send(e)
     }
 

@@ -47,30 +47,11 @@ app.use((req, res, next) => {
   next()
 })
 
-
 app.use(routes);
-
-const testSchema = new mongoose.Schema(
-  {
-    username: {
-      type: String,
-      required: true
-    }
-  },
-   {timestamps: true}
-)
-
-export const TestModel = mongoose.model('test', testSchema)
 
 app.get( "/test", (req,res ) => {
   res.send({msg: "Hello world!"});
 });
-
-app.get("/test/:id", async (req, res) => {
-  const { id } = req.params;
-  const foundRow = await TestModel.findById(id)
-  res.send(foundRow)
-})
 
 app.post("/signup", signup);
 
