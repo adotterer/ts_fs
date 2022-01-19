@@ -66,6 +66,7 @@
     "verbose": true,
     "testURL": "http://localhost/",
     "testEnvironment": "node",
+    "setupFilesAfterEnv": ["./test-db-setup.ts"],
     "testPathIgnorePatterns": [
       "dist/"
     ],
