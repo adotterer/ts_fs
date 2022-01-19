@@ -1,7 +1,11 @@
 import jwt from "jsonwebtoken";
-import express, {Request, Response, NextFunction} from "express";
-import { config } from "process";
-import { IUser, UserModel as User} from "../resources/user/user.model"
+import {Request, Response, NextFunction} from "express";
+import { UserModel as User} from "../resources/user/user.model"
+
+export type AsyncResponse = {
+    status: (status: number) => Response;
+    send: (result: any) => Promise<void>
+  }
 
 export const newToken = (userId: string) => {
     return jwt.sign({id: userId}, process.env.JWT_SECRET, {
@@ -18,7 +22,7 @@ export const verifyToken = (token: string) => {
     })
 }
 
-export const signup = async (req: Request, res: Response, next?: NextFunction) => {
+export const signup = async (req: Request, res: Response | AsyncResponse, next?: NextFunction) => {
     if(!req.body.email || !req.body.password || !req.body.username) {
         return res.status(400).send({message: "Email, username, & password required"})
     }

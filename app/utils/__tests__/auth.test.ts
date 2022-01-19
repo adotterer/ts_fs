@@ -1,10 +1,12 @@
-import {newToken, signup, verifyToken} from "../auth";
+import {newToken, signup, verifyToken, AsyncResponse} from "../auth";
 import jwt from "jsonwebtoken";
 import * as dotenv from 'dotenv';
 import mongoose from "mongoose"
 import cuid from "cuid";
-import {Request, Response, NextFunction} from "express";
+import {Request, Response as ExpressResponse,  NextFunction} from "express";
 import { IUser, UserModel as User} from "../../resources/user/user.model"
+
+
 
 dotenv.config();
 
@@ -70,8 +72,8 @@ describe("Authenication:", () => {
         test('requires email and password', async () => {
             expect.assertions(2);
 
-            const req = { body: {} } as Request;
-            const res = {
+            const req = <Request>{ body: {} };
+            const res = <ExpressResponse>{
                 status(status: number) {
                     expect(status).toBe(400)
                     return this
@@ -79,46 +81,45 @@ describe("Authenication:", () => {
                 send(result: any) {
                     expect(typeof result.message).toBe("string");
                 }
-            } as Response
+            } 
             await signup(req,res)
         })
         test('creates user and sends token from user', async () => {
             expect.assertions(2);
-            let token: string;
-            const req = {
+            const req = <Request>{
                 body: {
                 email: 'cbw@tinkieinc.com',
                 password: 'password',
                 username: "cbw"
                 }
-            } as Request
-            const res = {
+            } 
+            const res = <AsyncResponse> {
                 status(status: number) {
                     expect(status).toBe(201);
                     return this;
                 },
-                send(result: any) {
-                    token = result;
+                async send(result: any){
+                    const verifiedToken =  await verifyToken(result);
+                    const user = await User.findOne({email:'cbw@tinkieinc.com'})
+                    if(typeof verifiedToken !== "string" && "id" in verifiedToken){
+                        expect(verifiedToken.id).toBe(user.id)
+                    } else {
+                        fail("token error")
+                    }
                 }
-            } as Response
-
+            } 
                 await signup(req, res);
-                const user = await User.findOne({email: 'cbw@tinkieinc.com'});
-                const tokenObj = await verifyToken(token);
-                if(typeof tokenObj !== "string" && "id" in tokenObj) {
-                    expect(tokenObj.id).toBe(user.id);
-                }
         });
         test("should not allow duplicate emails", async () => {
             expect.assertions(2);
-            const req = {
+            const req = <Request>{
                 body: {
                 email: 'email@email.com',
                 password: 'password',
                 username: "rosie"
                 }
-            } as Request
-            const res = {
+            } 
+            const res = <ExpressResponse>{
                 status(status: number) {
                     expect(status).toBe(400);
                     return this;
@@ -126,8 +127,10 @@ describe("Authenication:", () => {
                 send(result: any) {
                     expect(result).toBe("This email is already in use")
                 }
-            } as Response
+            }
             await signup(req, res);
         })
     })
+    describe('signin', () => {
+    });
 })
