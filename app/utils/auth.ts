@@ -66,7 +66,6 @@ export const signin = async (req: Request, res: Response | CustomResponse, next?
         const token = newToken(user.id)
         return res.status(201).send({token})
     } catch(e) {
-
         return res.status(401).send({message: e.message})
     }
 }
