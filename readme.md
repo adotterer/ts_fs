@@ -18,10 +18,6 @@ sudo xcode-select --install
 - [x] `per-env` - use environment variables for starting app differently
 - [x] `jest` - jest
 
-<!-- - `pg@">=8.4.1"` - PostgresQL greater or equal to version 8.4.1
-- `sequelize@5` - Sequelize
-- `sequelize-cli@5` - use `sequelize` in the command line -->
-
 # Make a .env file
 
 See .env.example
