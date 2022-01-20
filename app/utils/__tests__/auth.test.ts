@@ -44,7 +44,7 @@ describe("Authenication:", () => {
                 }
             } as ExpressResponse
             await signup(req,res)
-        })
+        });
         test('creates user and sends token from user', async () => {
             expect.assertions(2);
             const req = {
@@ -142,6 +142,7 @@ describe("Authenication:", () => {
             await signin(req, res)
         })
         test("token is sent with valid credentials provided", async () =>{
+            expect.assertions(1)
             const testUser = await User.findOne({email: "email@email.com"}).exec();
             const userToken = newToken(testUser.id)
 
@@ -168,8 +169,8 @@ describe("Authenication:", () => {
         test("looks for Bearer token in headers", async () => {
             expect.assertions(2);
 
-            const req = <RequestU>{headers: {}};
-            const res = <ExpressResponse>{
+            const req = {headers: {}} as RequestU;
+            const res = {
                 status(status: number) {
                     expect(status).toBe(401)
                     return this;
@@ -177,32 +178,33 @@ describe("Authenication:", () => {
                 end() {
                     expect(true).toBe(true)
                 }
-            }
+            } as ExpressResponse
 
             await protect(req,res)
         })
         test("token must have correct prefix", async () => {
             expect.assertions(2);
 
-            let req = <RequestU>{ headers: {authorization: newToken("simpledimple")}};
-            let res = <ExpressResponse> {
+            const req = { headers: {authorization: newToken("simpledimple")}} as RequestU;
+            const res = {
                 status(status: number) {
                     expect(status).toBe(401)
                     return this;
-                }, 
+                },
                 end() {
                     expect(true).toBe(true);
                 }
-            }
+            } as ExpressResponse
             await protect(req, res)
         })
         test("must be real user", async() => {
+            expect.assertions(2)
             const testObj = new mongoose.Types.ObjectId();
-          
+
             const token = `Bearer ${newToken(testObj.toString())}`
             console.log(token);
-            const req = <RequestU>{ headers: { authorization: token } };
-            const res = <ExpressResponse>{
+            const req = { headers: { authorization: token } } as RequestU;
+            const res = {
                 status(status) {
                   expect(status).toBe(401)
                   return this
@@ -210,24 +212,26 @@ describe("Authenication:", () => {
                 end() {
                   expect(true).toBe(true)
                 }
-              }
+              } as ExpressResponse
             await protect(req, res);
         })
         test("finds user token and passes on", async() => {
+            expect.assertions(2)
             const user = await User.create({
                 email: "happy@beans.com",
                 password: "chickpea",
                 username: "beanboy"
             });
             const token = `Bearer ${newToken(user.id)}`
-            const req = <RequestU> {headers: {authorization: token}};
-            const res = <ExpressResponse>{}
-            const next = <NextFunction>() => {};
+            const req = {headers: {authorization: token}} as RequestU;
+            const res = {} as ExpressResponse
+            const next: NextFunction = () => {
+                return null
+            };
 
             await protect(req, res, next);
             expect(req.user.username).toBe(user.username)
             expect(req.user._id.toString()).toBe(user.id)
         })
-
     })
 })

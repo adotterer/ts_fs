@@ -44,11 +44,9 @@ export const signup = async (req: Request, res: Response | AsyncResponse, next?:
 }
 
 export const signin = async (req: Request, res: Response | AsyncResponse, next?: NextFunction) => {
-
     if(!req.body.email || !req.body.password) {
         return res.status(400).send({message: "Email and password required"})
     }
-
     try {
         const user = await User.findOne({email: req.body.email}).exec();
         const match = await user.checkPassword(req.body.password);
@@ -63,12 +61,12 @@ export const signin = async (req: Request, res: Response | AsyncResponse, next?:
 }
 
 export const protect = async (req: RequestU, res: Response, next?: NextFunction) => {
-  const bearer = req.headers.authorization // 
+  const bearer = req.headers.authorization //
   if(!bearer || !bearer.startsWith("Bearer ")) {
       return res.status(401).end()
   }
   const token = bearer.split("Bearer ")[1].trim();
-  let payload: String | jwt.JwtPayload
+  let payload: string | jwt.JwtPayload
   try {
     payload = await verifyToken(token)
     // console.log(payload, "line 74".padStart(30, "*"))
@@ -92,5 +90,5 @@ export const protect = async (req: RequestU, res: Response, next?: NextFunction)
         return res.status(401).end()
     }
 
-  
+
 }

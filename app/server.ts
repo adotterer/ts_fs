@@ -8,7 +8,7 @@ import routes from "./routes"
 import { colorConsoleLog } from "./console";
 import {connectDb} from "./db"
 import bodyParser from "body-parser";
-import {signup} from "./utils/auth"
+import {signup, protect} from "./utils/auth"
 
 import * as dotenv from 'dotenv';
 dotenv.config();
@@ -49,6 +49,10 @@ app.use(routes);
 
 app.get( "/test", (_req,res ) => {
   res.send({msg: "Hello world!"});
+});
+
+app.get("/protect", protect, (req, res) => {
+  res.send({msg: "What's up"})
 });
 
 app.post("/signup", signup);
