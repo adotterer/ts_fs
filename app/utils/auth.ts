@@ -1,12 +1,13 @@
 import jwt from "jsonwebtoken";
+import express from "express"
 import {Request, Response, NextFunction} from "express";
 import { UserModel as User, IUser} from "../resources/user/user.model";
 
-export interface AsyncResponse {
+export interface CustomResponse {
     status: (status: number) => Response;
     send: (result: any) => Promise<void>;
+    cookie?: (result: any) => any;
 }
-
 export interface RequestU extends Request{
     user: IUser
 }
@@ -26,7 +27,7 @@ export const verifyToken = (token: string) => {
     })
 }
 
-export const signup = async (req: Request, res: Response | AsyncResponse, next?: NextFunction) => {
+export const signup = async (req: Request, res: Response | CustomResponse, next?: NextFunction) => {
     if(!req.body.email || !req.body.password || !req.body.username) {
         return res.status(400).send({message: "Email, username, & password required"})
     }
@@ -36,6 +37,12 @@ export const signup = async (req: Request, res: Response | AsyncResponse, next?:
         }
         const user = await User.create(req.body);
         const token = newToken(user.id);
+        res.cookie("token", token, {
+            maxAge: expiresIn * 1000, // maxAge in milliseconds
+            httpOnly: true,
+            secure: isProduction,
+            sameSite: isProduction && "Lax",
+          })
         return res.status(201).send(token);
 
     } catch (e) {
@@ -43,7 +50,7 @@ export const signup = async (req: Request, res: Response | AsyncResponse, next?:
     }
 }
 
-export const signin = async (req: Request, res: Response | AsyncResponse, next?: NextFunction) => {
+export const signin = async (req: Request, res: Response | CustomResponse, next?: NextFunction) => {
     if(!req.body.email || !req.body.password) {
         return res.status(400).send({message: "Email and password required"})
     }

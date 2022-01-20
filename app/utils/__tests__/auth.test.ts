@@ -1,8 +1,10 @@
-import {newToken, signup, signin, verifyToken, protect, AsyncResponse, RequestU} from "../auth";
+import {newToken, signup, signin, verifyToken, protect, CustomResponse, RequestU} from "../auth";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
-import {Request, Response as ExpressResponse, NextFunction} from "express";
+import {Response, Request, NextFunction} from "express"
 import { UserModel as User} from "../../resources/user/user.model"
+import { resolve } from "path/posix";
+
 
 describe("Authenication:", () => {
     describe("newToken", () => {
@@ -42,7 +44,7 @@ describe("Authenication:", () => {
                 send(result: any) {
                     expect(typeof result.message).toBe("string");
                 }
-            } as ExpressResponse
+            } as Response
             await signup(req,res)
         });
         test('creates user and sends token from user', async () => {
@@ -54,21 +56,24 @@ describe("Authenication:", () => {
                 username: "cbw"
                 }
             } as Request
-            const res = {
+            const res: CustomResponse = {
                 status(status: number) {
                     expect(status).toBe(201);
                     return this;
                 },
                 async send(result: any){
-                    const verifiedToken =  await verifyToken(result);
-                    const user = await User.findOne({email:'cbw@tinkieinc.com'})
-                    if(typeof verifiedToken !== "string" && "id" in verifiedToken){
-                        expect(verifiedToken.id).toBe(user.id)
-                    } else {
-                        fail("token error")
-                    }
+                
+                        const verifiedToken =  await verifyToken(result);
+                        const user = await User.findOne({email:'cbw@tinkieinc.com'})
+                        if(typeof verifiedToken !== "string" && "id" in verifiedToken){
+                            expect(verifiedToken.id).toBe(user.id)
+                        } else {
+                            fail("token error")
+                        }
+                    
+                   
                 }
-            } as AsyncResponse
+            }
                 await signup(req, res);
         });
         test("should not allow duplicate emails", async () => {
@@ -88,7 +93,7 @@ describe("Authenication:", () => {
                 send(result: any) {
                     expect(result).toBe("This email is already in use")
                 }
-            } as ExpressResponse
+            } as Response
             await signup(req, res);
         })
     })
@@ -104,7 +109,7 @@ describe("Authenication:", () => {
                 send(result: any) {
                     expect(typeof result.message).toBe("string")
                 }
-            } as ExpressResponse
+            } as Response
             await signin(req, res)
         })
         test("user must be real", async () => {
@@ -121,7 +126,7 @@ describe("Authenication:", () => {
                 send(result: any) {
                     expect(typeof result.message).toBe("string")
                 }
-            } as ExpressResponse
+            } as Response
             await signin(req, res)
         })
         test("passwords must match", async () => {
@@ -138,7 +143,7 @@ describe("Authenication:", () => {
                 send(result: any) {
                     expect(typeof result.message).toBe("string")
                 }
-            } as ExpressResponse
+            } as Response
             await signin(req, res)
         })
         test("token is sent with valid credentials provided", async () =>{
@@ -160,7 +165,7 @@ describe("Authenication:", () => {
                     expect(result.token).toBe(userToken)
                     return this
                 }
-            } as AsyncResponse
+            } as CustomResponse
             await signin(req, res)
         })
 
@@ -178,7 +183,7 @@ describe("Authenication:", () => {
                 end() {
                     expect(true).toBe(true)
                 }
-            } as ExpressResponse
+            } as Response
 
             await protect(req,res)
         })
@@ -194,7 +199,7 @@ describe("Authenication:", () => {
                 end() {
                     expect(true).toBe(true);
                 }
-            } as ExpressResponse
+            } as Response
             await protect(req, res)
         })
         test("must be real user", async() => {
@@ -212,7 +217,7 @@ describe("Authenication:", () => {
                 end() {
                   expect(true).toBe(true)
                 }
-              } as ExpressResponse
+              } as Response
             await protect(req, res);
         })
         test("finds user token and passes on", async() => {
@@ -224,7 +229,7 @@ describe("Authenication:", () => {
             });
             const token = `Bearer ${newToken(user.id)}`
             const req = {headers: {authorization: token}} as RequestU;
-            const res = {} as ExpressResponse
+            const res = {} as Response
             const next: NextFunction = () => {
                 return null
             };
