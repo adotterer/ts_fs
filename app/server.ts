@@ -4,7 +4,6 @@ import cors from "cors";
 import csurf from "csurf";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
-import routes from "./routes"
 import { colorConsoleLog } from "./console";
 import {connectDb} from "./db"
 import bodyParser from "body-parser";
@@ -44,8 +43,6 @@ app.use((req, res, next) => {
   res.cookie('XSRF-TOKEN', req.csrfToken())
   next()
 })
-
-app.use(routes);
 
 app.get( "/test", (_req,res ) => {
   res.send({msg: "Hello world!"});
