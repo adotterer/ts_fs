@@ -188,8 +188,12 @@ describe("Authenication:", () => {
                 status(status: number) {
                     expect(status).toBe(401)
                     return this;
+                }, 
+                end() {
+                    expect(true).toBe(true);
                 }
             }
+            await protect(req, res)
         })
     })
 })
