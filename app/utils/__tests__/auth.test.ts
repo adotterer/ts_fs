@@ -226,6 +226,7 @@ describe("Authenication:", () => {
 
             await protect(req, res, next);
             expect(req.user.username).toBe(user.username)
+            expect(req.user._id.toString()).toBe(user.id)
         })
 
     })
