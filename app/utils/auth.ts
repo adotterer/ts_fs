@@ -5,11 +5,13 @@ import { UserModel as User, IUser} from "../resources/user/user.model";
 export interface CustomResponse {
     status: (status: number) => Response;
     send: (result: any) => Promise<void>;
-    cookie?: (result: any) => any;
+    cookie?: (key: string, value: string, options?: {}) => any;
 }
 export interface RequestU extends Request{
     user: IUser
 }
+
+const isProduction = process.env.ENVIRONMENT === 'production';
 
 export const newToken = (userId: string) => {
     return jwt.sign({id: userId}, process.env.JWT_SECRET, {
@@ -37,10 +39,10 @@ export const signup = async (req: Request, res: Response | CustomResponse, next?
         const user = await User.create(req.body);
         const token = newToken(user.id);
         res.cookie("token", token, {
-            maxAge: expiresIn * 1000, // maxAge in milliseconds
+            maxAge: Number(process.env.JWT_EXPIRES) * 1000, // maxAge in milliseconds
             httpOnly: true,
             secure: isProduction,
-            sameSite: isProduction && "Lax",
+            sameSite: isProduction || "lax",
           })
         return res.status(201).send(token);
 

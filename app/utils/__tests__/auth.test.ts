@@ -3,7 +3,6 @@ import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 import {Response, Request, NextFunction} from "express"
 import { UserModel as User} from "../../resources/user/user.model"
-import { resolve } from "path/posix";
 
 
 describe("Authenication:", () => {
@@ -48,7 +47,7 @@ describe("Authenication:", () => {
             await signup(req,res)
         });
         test('creates user and sends token from user', async () => {
-            expect.assertions(2);
+            expect.assertions(3);
             const req = {
                 body: {
                 email: 'cbw@tinkieinc.com',
@@ -57,12 +56,14 @@ describe("Authenication:", () => {
                 }
             } as Request
             const res: CustomResponse = {
+                cookie(key, value, options){
+                    expect(true).toBe(true)
+                },
                 status(status: number) {
                     expect(status).toBe(201);
                     return this;
                 },
                 async send(result: any){
-                
                         const verifiedToken =  await verifyToken(result);
                         const user = await User.findOne({email:'cbw@tinkieinc.com'})
                         if(typeof verifiedToken !== "string" && "id" in verifiedToken){
