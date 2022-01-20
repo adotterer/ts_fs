@@ -211,8 +211,23 @@ describe("Authenication:", () => {
                   expect(true).toBe(true)
                 }
               }
-
             await protect(req, res);
         })
+        test("finds user token and passes on", async() => {
+            const user = await User.create({
+                email: "happy@beans.com",
+                password: "chickpea",
+                username: "beanboy"
+            });
+            const token = `Bearer ${newToken(user.id)}`
+            const req = <RequestU> {headers: {authorization: token}};
+            const res = <ExpressResponse>{}
+            const next = <NextFunction>() => {};
+
+            await protect(req, res, next)
+            console.log(req.user.username, "req.user.username")
+            expect(req.user.username).toBe(user.username)
+        })
+
     })
 })
