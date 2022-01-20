@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import {Request, Response, NextFunction} from "express";
 import { UserModel as User} from "../resources/user/user.model"
-
+import mongoose from "mongoose"
 export interface AsyncResponse {
     status: (status: number) => Response;
     send: (result: any) => Promise<void>;
@@ -63,6 +63,10 @@ export const signin = async (req: Request, res: Response | AsyncResponse, next?:
 }
 
 export const protect = (req: Request, res: Response, next: NextFunction) => {
-  console.log(req)
+  const bearer = req.headers.authorization // 
+
+  const token = `Bearer ${newToken(mongoose.Types.ObjectId())}`
+
+    console.log(req)
   console.log(res)
 }
