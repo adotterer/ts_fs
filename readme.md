@@ -12,7 +12,6 @@ sudo xcode-select --install
 - [x] `express` - Express
 - [x] `express-async-handler` - handling `async` route handlers
 - [x] `express-validator` - validation of request bodies
-- [x] `faker` - random seeding library
 - [x] `helmet` - security middleware
 - [x] `jsonwebtoken` - JWT
 - [x] `morgan` - logging information about server requests/responses
