@@ -1,5 +1,6 @@
 import {newToken, signup, signin, verifyToken, protect, AsyncResponse} from "../auth";
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 import {Request, Response as ExpressResponse, NextFunction} from "express";
 import { UserModel as User} from "../../resources/user/user.model"
 
@@ -194,6 +195,24 @@ describe("Authenication:", () => {
                 }
             }
             await protect(req, res)
+        })
+        test("must be real user", async() => {
+            const testObj = new mongoose.Types.ObjectId();
+          
+            const token = `Bearer ${newToken(testObj.toString())}`
+            console.log(token);
+            const req = <Request>{ headers: { authorization: token } };
+            const res = <ExpressResponse>{
+                status(status) {
+                  expect(status).toBe(401)
+                  return this
+                },
+                end() {
+                  expect(true).toBe(true)
+                }
+              }
+
+            await protect(req, res);
         })
     })
 })
