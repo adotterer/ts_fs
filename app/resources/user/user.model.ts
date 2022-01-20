@@ -1,8 +1,8 @@
-import mongoose, {Schema, Document} from 'mongoose';
+import mongoose, {Types, Schema, Document} from 'mongoose';
 import bcrypt, { hashSync } from 'bcryptjs';
 
 
-export interface IUser {
+export interface IUser extends Types.ObjectId{
     username: string,
     email: string,
     password: string,

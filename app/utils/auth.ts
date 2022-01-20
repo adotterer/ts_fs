@@ -81,10 +81,12 @@ export const protect = async (req: RequestU, res: Response, next?: NextFunction)
         .select('-password')
         .lean()
         .exec()
+        console.log("user!!", user)
       if(!user) {
           return res.status(401).end();
       }
       req.user = user
+      console.log("lol, the id", req.user.id)
       next();
     } else {
         return res.status(401).end()
