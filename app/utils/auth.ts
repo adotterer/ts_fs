@@ -70,7 +70,8 @@ export const protect = async (req: RequestU, res: Response, next?: NextFunction)
   const token = bearer.split("Bearer ")[1].trim();
   let payload: String | jwt.JwtPayload
   try {
-    payload = verifyToken(token)
+    payload = await verifyToken(token)
+    console.log(payload, "line 74".padStart(30, "*"))
   } catch(e) {
     return res.status(401).end()
   }
@@ -80,7 +81,9 @@ export const protect = async (req: RequestU, res: Response, next?: NextFunction)
         .select('-password')
         .lean()
         .exec()
+      console.log("user-->", user)
       if(!user) {
+          console.log("not a real user bitch".padStart(30, "_"))
           return res.status(401).end();
       }
       req.user = user
