@@ -56,16 +56,13 @@ export const signin = async (req: Request, res: Response | AsyncResponse, next?:
         if(!match) throw new Error("Invalid credentials")
 
         const token = newToken(user.id)
-
         return res.status(201).send({token})
-
     } catch(e) {
         return res.status(401).send(e)
     }
-
 }
 
-export const protect = (req: Request, res: Response) => {
+export const protect = (req: Request, res: Response, next: NextFunction) => {
   console.log(req)
   console.log(res)
 }

@@ -2,7 +2,7 @@ import {UserModel as User} from "../user/user.model"
 
 describe("UserModel:", () => {
     describe("password hash", () => {
-        test("should hash all passwords", async () => {
+        test("should hash all passwords", async() => {
             const user = await User.findOne({email: "email@email.com"}).exec()
             expect(user.password).not.toBe("password")
         })
@@ -18,6 +18,11 @@ describe("UserModel:", () => {
             const user = await User.findOne({email: "email@email.com"}).exec();
             const match = await user.checkPassword("password");
             expect(match).toBe(true)
+        })
+        test("should return false with incorrect password", async () => {
+            const user = await User.findOne({email: "email@email.com"}).exec();
+            const match = await user.checkPassword("notpassword");
+            expect(match).toBe(false)
         })
     })
 })
