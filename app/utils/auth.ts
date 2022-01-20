@@ -1,16 +1,15 @@
 import jwt from "jsonwebtoken";
 import {Request, Response, NextFunction} from "express";
-import { UserModel as User} from "../resources/user/user.model";
-import mongoose from "mongoose";
+import { UserModel as User, IUser} from "../resources/user/user.model";
 
 export interface AsyncResponse {
     status: (status: number) => Response;
     send: (result: any) => Promise<void>;
 }
 
-// export interface AsyncResponse extends Response {
-//     send: (result: any) => Promise<void> | this
-// }
+export interface RequestU extends Request{
+    user: IUser
+}
 
 export const newToken = (userId: string) => {
     return jwt.sign({id: userId}, process.env.JWT_SECRET, {
@@ -63,13 +62,32 @@ export const signin = async (req: Request, res: Response | AsyncResponse, next?:
     }
 }
 
-export const protect = async (req: Request, res: Response, next?: NextFunction) => {
+export const protect = async (req: RequestU, res: Response, next?: NextFunction) => {
   const bearer = req.headers.authorization // 
-  console.log("bearer", bearer);
-  const objId = new mongoose.Types.ObjectId();
-  const string2 = objId.toString();
-  console.log(string2)
-  const token = `Bearer ${newToken(objId.id.toString())}`
+  if(!bearer || !bearer.startsWith("Bearer ")) {
+      return res.status(401).end()
+  }
+  const token = bearer.split("Bearer ")[1].trim();
+  let payload: String | jwt.JwtPayload
+  try {
+    payload = verifyToken(token)
+  } catch(e) {
+    return res.status(401).end()
+  }
 
-  console.log(token);
+  if(typeof payload !== "string" && "id" in payload) {
+      const user = await User.findById(payload.id)
+        .select('-password')
+        .lean()
+        .exec()
+      if(!user) {
+          return res.status(401).end();
+      }
+      req.user = user
+      next();
+    } else {
+        return res.status(401).end()
+    }
+
+  
 }

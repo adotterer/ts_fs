@@ -1,4 +1,4 @@
-import {newToken, signup, signin, verifyToken, protect, AsyncResponse} from "../auth";
+import {newToken, signup, signin, verifyToken, protect, AsyncResponse, RequestU} from "../auth";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 import {Request, Response as ExpressResponse, NextFunction} from "express";
@@ -168,7 +168,7 @@ describe("Authenication:", () => {
         test("looks for Bearer token in headers", async () => {
             expect.assertions(2);
 
-            const req = <Request>{headers: {}};
+            const req = <RequestU>{headers: {}};
             const res = <ExpressResponse>{
                 status(status: number) {
                     expect(status).toBe(401)
@@ -184,7 +184,7 @@ describe("Authenication:", () => {
         test("token must have correct prefix", async () => {
             expect.assertions(2);
 
-            let req = <Request>{ headers: {authorization: newToken("simpledimple")}};
+            let req = <RequestU>{ headers: {authorization: newToken("simpledimple")}};
             let res = <ExpressResponse> {
                 status(status: number) {
                     expect(status).toBe(401)
@@ -201,7 +201,7 @@ describe("Authenication:", () => {
           
             const token = `Bearer ${newToken(testObj.toString())}`
             console.log(token);
-            const req = <Request>{ headers: { authorization: token } };
+            const req = <RequestU>{ headers: { authorization: token } };
             const res = <ExpressResponse>{
                 status(status) {
                   expect(status).toBe(401)
