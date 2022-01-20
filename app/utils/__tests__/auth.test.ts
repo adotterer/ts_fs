@@ -1,6 +1,6 @@
-import {newToken, signup, signin, verifyToken, AsyncResponse} from "../auth";
+import {newToken, signup, signin, verifyToken, protect, AsyncResponse} from "../auth";
 import jwt from "jsonwebtoken";
-import {Request, Response as ExpressResponse,  NextFunction} from "express";
+import {Request, Response as ExpressResponse, NextFunction} from "express";
 import { UserModel as User} from "../../resources/user/user.model"
 
 describe("Authenication:", () => {
@@ -164,9 +164,21 @@ describe("Authenication:", () => {
 
     });
     describe("protect", () => {
-        test("looks for Bearer token in headers", () => {
-        
-            fail("this one isn't written yet")
+        test("looks for Bearer token in headers", async () => {
+            expect.assertions(2);
+
+            const req = <Request>{headers: {}};
+            const res = <ExpressResponse>{
+                status(status: number) {
+                    expect(status).toBe(401)
+                    return this;
+                },
+                end() {
+                    expect(true).toBe(true)
+                }
+            }
+
+            await protect(req,res)
         })
     })
 })
