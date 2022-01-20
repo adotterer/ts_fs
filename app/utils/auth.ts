@@ -69,7 +69,7 @@ export const protect = async (req: RequestU, res: Response, next?: NextFunction)
   let payload: string | jwt.JwtPayload
   try {
     payload = await verifyToken(token)
-    // console.log(payload, "line 74".padStart(30, "*"))
+
   } catch(e) {
     return res.status(401).end()
   }
@@ -84,7 +84,6 @@ export const protect = async (req: RequestU, res: Response, next?: NextFunction)
           return res.status(401).end();
       }
       req.user = user
-      console.log("lol, the id", req.user.id)
       next();
     } else {
         return res.status(401).end()
