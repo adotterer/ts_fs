@@ -63,11 +63,12 @@ export const signin = async (req: Request, res: Response | AsyncResponse, next?:
     }
 }
 
-export const protect = (req: Request, res: Response, next?: NextFunction) => {
+export const protect = async (req: Request, res: Response, next?: NextFunction) => {
   const bearer = req.headers.authorization // 
-  console.log(bearer);
+  console.log("bearer", bearer);
   const objId = new mongoose.Types.ObjectId();
-  console.log(objId.id.toString(), "toString method on this object")
+  const string2 = objId.toString();
+  console.log(string2)
   const token = `Bearer ${newToken(objId.id.toString())}`
 
   console.log(token);
