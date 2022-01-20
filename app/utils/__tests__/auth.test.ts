@@ -180,5 +180,16 @@ describe("Authenication:", () => {
 
             await protect(req,res)
         })
+        test("token must have correct prefix", async () => {
+            expect.assertions(2);
+
+            let req = <Request>{ headers: {authorization: newToken("simpledimple")}};
+            let res = <ExpressResponse> {
+                status(status: number) {
+                    expect(status).toBe(401)
+                    return this;
+                }
+            }
+        })
     })
 })
