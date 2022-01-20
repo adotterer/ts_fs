@@ -224,8 +224,7 @@ describe("Authenication:", () => {
             const res = <ExpressResponse>{}
             const next = <NextFunction>() => {};
 
-            await protect(req, res, next)
-            console.log(req.user.username, "req.user.username")
+            await protect(req, res, next);
             expect(req.user.username).toBe(user.username)
         })
 
