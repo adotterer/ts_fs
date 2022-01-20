@@ -1,8 +1,7 @@
 import * as dotenv from 'dotenv';
 import mongoose from "mongoose"
 import cuid from "cuid";
-import {Request, Response as ExpressResponse,  NextFunction} from "express";
-import {UserModel as User} from "./resources/user/user.model"
+import {UserModel as User} from "../resources/user/user.model"
 
 dotenv.config();
 
@@ -23,7 +22,7 @@ beforeEach(async () => {
                 username: 'rosie'
                 });
         } catch(e) {
-          console.error(e);
+          // console.error(e);
           throw e
         }
     }

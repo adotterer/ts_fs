@@ -203,12 +203,13 @@ describe("Authenication:", () => {
             } as Response
             await protect(req, res)
         })
+
         test("must be real user", async() => {
             expect.assertions(2)
             const testObj = new mongoose.Types.ObjectId();
 
             const token = `Bearer ${newToken(testObj.toString())}`
-            console.log(token);
+
             const req = { headers: { authorization: token } } as RequestU;
             const res = {
                 status(status) {

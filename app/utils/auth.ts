@@ -48,7 +48,6 @@ export const signup = async (req: Request, res: Response | CustomResponse, next?
         return res.status(201).send(token);
 
     } catch (e) {
-        console.error(e)
         return res.status(400).send(e.message.includes("duplicate") ? "This email is already in use" : "error");
     }
 }
@@ -67,7 +66,7 @@ export const signin = async (req: Request, res: Response | CustomResponse, next?
         const token = newToken(user.id)
         return res.status(201).send({token})
     } catch(e) {
-        console.error(e)
+
         return res.status(401).send({message: e.message})
     }
 }
@@ -91,7 +90,6 @@ export const protect = async (req: RequestU, res: Response, next?: NextFunction)
         .select('-password')
         .lean()
         .exec()
-        console.log("user!!", user)
       if(!user) {
           return res.status(401).end();
       }
