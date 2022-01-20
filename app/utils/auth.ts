@@ -36,10 +36,11 @@ export const signup = async (req: Request, res: Response | CustomResponse, next?
         if(await User.findOne({email: req.body.email})) {
             throw new Error("duplicate email")
         }
+        const maxAge: number =  parseInt(process.env.JWT_EXPIRES_IN, 10) * 1000
         const user = await User.create(req.body);
         const token = newToken(user.id);
         res.cookie("token", token, {
-            maxAge: Number(process.env.JWT_EXPIRES) * 1000, // maxAge in milliseconds
+            maxAge, // maxAge in milliseconds
             httpOnly: true,
             secure: isProduction,
             sameSite: isProduction || "lax",
@@ -47,6 +48,7 @@ export const signup = async (req: Request, res: Response | CustomResponse, next?
         return res.status(201).send(token);
 
     } catch (e) {
+        console.error(e)
         return res.status(400).send(e.message.includes("duplicate") ? "This email is already in use" : "error");
     }
 }
@@ -57,6 +59,8 @@ export const signin = async (req: Request, res: Response | CustomResponse, next?
     }
     try {
         const user = await User.findOne({email: req.body.email}).exec();
+        console.log(user, "user!!")
+
         const match = await user.checkPassword(req.body.password);
         if(!user) throw new Error("No user found")
         if(!match) throw new Error("Invalid credentials")
@@ -64,7 +68,8 @@ export const signin = async (req: Request, res: Response | CustomResponse, next?
         const token = newToken(user.id)
         return res.status(201).send({token})
     } catch(e) {
-        return res.status(401).send(e)
+        console.error(e)
+        return res.status(401).send({msg: e.message})
     }
 }
 
