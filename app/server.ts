@@ -8,7 +8,7 @@ import routes from "./routes"
 import { colorConsoleLog } from "./console";
 import {connectDb} from "./db"
 import bodyParser from "body-parser";
-import {signup, protect} from "./utils/auth"
+import {signup, signin, protect} from "./utils/auth"
 
 import * as dotenv from 'dotenv';
 dotenv.config();
@@ -56,6 +56,7 @@ app.get("/protect", protect, (req, res) => {
 });
 
 app.post("/signup", signup);
+app.post("/signin", signin);
 
 const port = process.env.PORT;
 
