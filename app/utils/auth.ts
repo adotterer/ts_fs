@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import express from "express"
 import {Request, Response, NextFunction} from "express";
 import { UserModel as User, IUser} from "../resources/user/user.model";
 
