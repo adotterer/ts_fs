@@ -60,7 +60,7 @@ export const signin = async (req: Request, res: Response | CustomResponse, next?
     try {
         const user = await User.findOne({email: req.body.email}).exec();
         if(!user) throw new Error("No user found")
-        
+
         const match = await user.checkPassword(req.body.password);
         if(!match) throw new Error("Invalid credentials")
 
