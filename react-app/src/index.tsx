@@ -9,6 +9,10 @@ import configureStore from './store';
 
 import './index.css';
 
+declare global {
+  interface Window { store: any;}
+}
+
 const Root: React.FC = () => (
   <BrowserRouter>
     <App />
@@ -16,6 +20,10 @@ const Root: React.FC = () => (
 );
 
 const store = configureStore(undefined);
+
+if(process.env.NODE_ENV !== "production") {
+  window.store = store;
+}
 
 render(
   <Provider store={ store }>

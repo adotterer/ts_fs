@@ -1,7 +1,6 @@
 import { DefaultRootState } from 'react-redux';
 import { createStore, combineReducers, applyMiddleware, compose, StoreEnhancer } from 'redux';
 import thunk from 'redux-thunk';
-
 import modal, { modalState } from './modal';
 
 export interface AppState extends DefaultRootState {
