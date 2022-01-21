@@ -9,9 +9,11 @@ import configureStore from './store';
 
 import './index.css';
 
-declare global {
-  interface Window { store: any;}
+export interface CustomWindow extends Window {
+  store: any;
 }
+
+declare let window: CustomWindow;
 
 const Root: React.FC = () => (
   <BrowserRouter>
