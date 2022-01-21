@@ -55,6 +55,35 @@ app.get("/protect", protect, (req, res) => {
 app.post("/signup", signup);
 app.post("/signin", signin);
 
+if (process.env.ENVIRONMENT === 'production') {
+  const path = require('path');
+  // Serve the frontend's index.html file at the root route
+  app.get('/', (req, res) => {
+    res.cookie('XSRF-TOKEN', req.csrfToken());
+    res.sendFile(
+      path.resolve(__dirname, '../../react-app', 'build', 'index.html')
+    );
+  });
+
+  // Serve the static assets in the frontend's build folder
+  app.use(express.static(path.resolve('../react-app/build')));
+
+  app.get(/^(?!\/?api).*/, (req, res) => {
+    res.cookie('XSRF-TOKEN', req.csrfToken());
+    res.sendFile(
+      path.resolve(__dirname, '../../react-app', 'build', 'index.html')
+    );
+  });
+}
+
+// Add a XSRF-TOKEN cookie in development
+if (process.env.ENVIRONMENT !== 'production') {
+  app.get('/api/csrf/restore', (req, res) => {
+    res.cookie('XSRF-TOKEN', req.csrfToken());
+    res.status(201).json({});
+  });
+}
+
 const port = process.env.PORT;
 
 export const start = async () => {
