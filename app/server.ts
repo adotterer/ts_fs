@@ -8,6 +8,7 @@ import { colorConsoleLog } from "./console";
 import {connectDb} from "./db"
 import bodyParser from "body-parser";
 import {signup, signin, protect} from "./utils/auth"
+import path from "path"
 
 import * as dotenv from 'dotenv';
 dotenv.config();
@@ -55,8 +56,8 @@ app.get("/protect", protect, (req, res) => {
 app.post("/signup", signup);
 app.post("/signin", signin);
 
-if (process.env.ENVIRONMENT === 'production') {
-  const path = require('path');
+if (isProduction) {
+
   // Serve the frontend's index.html file at the root route
   app.get('/', (req, res) => {
     res.cookie('XSRF-TOKEN', req.csrfToken());
@@ -77,7 +78,7 @@ if (process.env.ENVIRONMENT === 'production') {
 }
 
 // Add a XSRF-TOKEN cookie in development
-if (process.env.ENVIRONMENT !== 'production') {
+if (!isProduction) {
   app.get('/api/csrf/restore', (req, res) => {
     res.cookie('XSRF-TOKEN', req.csrfToken());
     res.status(201).json({});
