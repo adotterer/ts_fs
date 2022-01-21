@@ -1,5 +1,6 @@
 import { DefaultRootState } from 'react-redux';
 import { createStore, combineReducers, applyMiddleware, compose, StoreEnhancer } from 'redux';
+import * as createLogger from 'redux-logger';
 import thunk from 'redux-thunk';
 import modal, { modalState } from './modal';
 
@@ -16,7 +17,7 @@ let enhancer: StoreEnhancer;
 if (process.env.NODE_ENV === 'production') {
   enhancer = applyMiddleware(thunk);
 } else {
-  const logger = require('redux-logger').default;
+  const logger = createLogger.default;
   enhancer = compose(applyMiddleware(thunk, logger));
 }
 
