@@ -15,7 +15,6 @@ export async function csrfFetch(url: string, options = <RequestInit>{}): Promise
         }
     }
 
-  
     const res = await fetch(url, {
       headers: requestHeaders,
       ...options
