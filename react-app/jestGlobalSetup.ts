@@ -1,10 +1,13 @@
 import {spawn} from "child_process";
 import cwd from "cwd";
+import ping from "ping"
+const serverReady = async () => {
 
+}
 export async function setup() {
     // process.stdout.write("going to attempt to start server");
-    let path = cwd().split("react-app");
-    path + "app/"
+    let [path, _] = cwd().split("react-app");
+    path += "app/"
     console.log(path, "path, no clue ")
     const command = "npm";
     const args = [
@@ -12,7 +15,11 @@ export async function setup() {
     ];
     const options = {
         shell: true,
-        cwd: cwd()
+        cwd: path
     }
+
+    const server = spawn(
+        command, args, options);
     
+   
 }

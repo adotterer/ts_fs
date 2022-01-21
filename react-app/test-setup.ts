@@ -1,7 +1,7 @@
 import { start, close } from "../app/server"
 import {setup} from "./jestGlobalSetup"
 setup()
-beforeEach(async () => {
+beforeAll(async () => {
     // console.log("Before")
     // await start()
     // console.log("after bitch")
