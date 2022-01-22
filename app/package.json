@@ -62,6 +62,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.13",
     "morgan": "^1.10.0",
+    "node-fetch": "^3.2.0",
     "per-env": "^1.0.2"
   },
   "jest": {
