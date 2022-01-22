@@ -1,6 +1,5 @@
 import { start, close } from "../app/server"
 import {setup} from "./jestGlobalSetup"
-setup()
 beforeAll(async () => {
     // console.log("Before")
     // await start()

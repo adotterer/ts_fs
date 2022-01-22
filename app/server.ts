@@ -9,9 +9,14 @@ import {connectDb} from "./db"
 import bodyParser from "body-parser";
 import {signup, signin, protect} from "./utils/auth"
 import path from "path"
+import http from "http"
+import mongoose from "mongoose"
 
 import * as dotenv from 'dotenv';
+import { Http2ServerRequest } from "http2";
+import { Mongoose } from "mongoose";
 dotenv.config();
+console.log("chicken".padEnd(50, "*"))
 
 const isProduction = process.env.ENVIRONMENT === 'production';
 
@@ -86,16 +91,23 @@ if (!isProduction) {
 }
 
 const port = process.env.PORT;
+let server: http.Server;
 
 export const start = async () => {
   try {
     await connectDb();
-    app.listen(process.env.PORT, () => {
+    server = app.listen(process.env.PORT, () => {
         colorConsoleLog(`Server started at http://localhost:${port}`);
     });
+
   } catch (e) {
     console.error(e);
   }
+}
+
+export const close = () => {
+  server.close(() => console.log("Server closed"));
+  mongoose.connection.close()
 }
 
 export default app;
