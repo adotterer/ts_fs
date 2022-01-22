@@ -49,9 +49,13 @@ app.use((req, res, next) => {
   next()
 })
 
-app.get( "/test", (_req,res ) => {
+app
+  .get("/test", (_req,res ) => {
   res.send({msg: "Hello world!"});
-});
+})
+  .post("/test", (req, res)  => {
+
+})
 
 app.get("/protect", protect, (req, res) => {
   res.send({msg: "What's up"})
