@@ -16,7 +16,6 @@ import * as dotenv from 'dotenv';
 import { Http2ServerRequest } from "http2";
 import { Mongoose } from "mongoose";
 dotenv.config();
-console.log("chicken".padEnd(50, "*"))
 
 const isProduction = process.env.ENVIRONMENT === 'production';
 
