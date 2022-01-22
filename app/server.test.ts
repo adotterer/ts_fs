@@ -18,9 +18,15 @@ describe("server app", () => {
     agent.get("/api/csrf/restore").expect(201)
     const access_info = new CookieAccessInfo("/api/csrf/restore")
     const cookie = agent.jar.getCookie("XSRF-TOKEN",access_info)
-    const tokenOk = await verifyToken(cookie.value)
-    const res = await nodeFetch("")
-    expect(tokenOk).toBe("muffins")
+    // const tokenOk = await verifyToken(cookie.value)
+    const res = await nodeFetch("/test",
+      {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({msg: "muffins"})
+      })
+      console.log("res".padStart(30, "*"), res)
+    expect(res.ok).toBe("muffins")
     })
 
       // look at node-cookiejar

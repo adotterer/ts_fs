@@ -54,7 +54,8 @@ app
   res.send({msg: "Hello world!"});
 })
   .post("/test", (req, res)  => {
-
+    const {msg} = req.body;
+    return res.status(201).send({msg})
 })
 
 app.get("/protect", protect, (req, res) => {
