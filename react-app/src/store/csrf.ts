@@ -22,3 +22,7 @@ export async function csrfFetch(url: string, options = <RequestInit>{}): Promise
     if (res.status >= 400 ) throw res
     return res
 }
+
+export function restoreCSRF() {
+    return csrfFetch("/api/csrf/restore");
+}
