@@ -19,7 +19,6 @@ export async function csrfFetch(url: string, options = <RequestInit>{}): Promise
       headers: requestHeaders,
       ...options
     });
-    console.log(res, "resbtich")
     if (res.status >= 400 ) throw res
     return res
 }

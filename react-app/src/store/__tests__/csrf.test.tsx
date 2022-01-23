@@ -1,12 +1,20 @@
 import * as React from 'react'
-import ReactDOM from 'react-dom';
+import {csrfFetch} from "../csrf"
 import {render, fireEvent, screen} from "@testing-library/react"
 import App from "../../App"
 
 describe("csrf fetch", () => {
-    test("it should work, yet it won't", async () => {
-        const {container} = render(<App />)
-        
+    test("should pass on any headers sent in options", async () => {
+
+        const windowSpy = spyOn(window, "fetch");
+
+        await csrfFetch("/test", {
+            method: "POST",
+            headers: {"Content-Type": "test"},
+            body: JSON.stringify({msg: "Hello world"})
+        })
+        expect(windowSpy).toHaveBeenCalled();
+
         
     })
 })
