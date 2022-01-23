@@ -16,12 +16,14 @@ module.exports = {
     modules: [__dirname, 'src', 'node_modules'],
     extensions: ['*', '.js', '.jsx', '.tsx', '.ts']
   },
-  devServer: { 
-    inline: true, 
-    contentBase: './dist', 
-    port: 3001, 
-    proxy: { "/api/**": { target: 'http://localhost:5050', secure: false }  }
- },
+  devServer: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5050',
+        pathRewrite: { '^/api': '' },
+      },
+    },
+  },
   module: {
     rules: [
       {
