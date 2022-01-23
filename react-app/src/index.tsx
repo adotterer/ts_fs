@@ -11,7 +11,7 @@ import './index.css';
 
 export interface CustomWindow extends Window {
   store: any;
-  fetch: any;
+  csrfFetch: any;
 }
 
 declare let window: CustomWindow;
@@ -27,7 +27,7 @@ const store = configureStore(undefined);
 if(process.env.NODE_ENV !== "production") {
   restoreCSRF();
   window.store = store;
-  window.fetch = csrfFetch;
+  window.csrfFetch = csrfFetch
 }
 
 render(
