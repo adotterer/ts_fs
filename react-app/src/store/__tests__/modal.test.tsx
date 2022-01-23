@@ -1,4 +1,5 @@
 import React from "react"
+import {render, fireEvent, screen} from '@testing-library/react'
 import {useDispatch} from "react-redux";
 import {ShowModal, HideModal, SetModalCurrent} from "../modal"
 
@@ -12,17 +13,25 @@ function Test(): JSX.Element {
     return (
         <div>
             <button
-                className="button highlight" 
                 onClick={() => dispatch(ShowModal())}
             >
-                Click here for modal poup
+                Open Modal
             </button>
             <button
-                className="button no_highlight" 
                 onClick={() => dispatch(HideModal())}
             >
-                Click here for modal to hide
+                Close Button
             </button>
         </div>
         )
 }
+
+describe("Modal", () => {
+    test("should appear when you dispatch ShowModal", () => {
+        const {container} = render(<Test />);
+        const openButton = screen.getByRole("button", {name: /Open/i})
+        openButton.click();
+        expect(screen.getByText("Hello")).toBeInTheDocument()
+
+    })
+})
