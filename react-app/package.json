@@ -30,6 +30,7 @@
     "@babel/preset-env": "^7.15.8",
     "@babel/preset-react": "^7.14.5",
     "@babel/preset-typescript": "^7.16.7",
+    "@testing-library/react": "^12.1.2",
     "@types/cwd": "^0.10.0",
     "@types/jest": "^27.4.0",
     "@types/js-cookie": "^3.0.1",
@@ -57,12 +58,12 @@
   "jest": {
     "verbose": true,
     "testURL": "http://localhost/",
-    "testEnvironment": "node",
+    "testEnvironment": "jsdom",
     "setupFilesAfterEnv": [
       "./test-setup.ts"
     ],
     "testPathIgnorePatterns": [
-      "dist/"
+      "build/"
     ],
     "testMatch": [
       "**/__tests__/**/*.[jt]s?(x)",
