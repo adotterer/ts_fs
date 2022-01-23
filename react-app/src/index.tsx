@@ -7,6 +7,7 @@ import App from './App';
 import Modal from './components/Modal';
 import configureStore from './store';
 
+
 import './index.css';
 
 export interface CustomWindow extends Window {
