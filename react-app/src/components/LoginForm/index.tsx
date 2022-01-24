@@ -20,5 +20,31 @@ export default function LoginForm(): JSX.Element {
            
 
     }
-    return (<form onSubmit={handleSubmit}></form>)
+    return (
+    <form onSubmit={handleSubmit}>
+        <h1>Login</h1>
+        <label htmlFor="name">
+            Email
+        </label>
+        <input 
+            name="email" 
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            placeholder="Email address"
+            required
+        >
+        </input>
+        <label htmlFor="password">
+            Password
+        </label>
+        <input 
+            name="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+            required
+        >
+        </input>
+        <button type="submit">Submit</button>
+    </form>)
 }
