@@ -9,7 +9,8 @@ export default function LoginForm(): JSX.Element {
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const sessionUser = useSelector((state: AppState) => state.session.user)
-
+    if (sessionUser) return <Redirect to="/" />
+    
     const handleSubmit = (e: FormEvent) => {
         
         try { 
@@ -17,8 +18,6 @@ export default function LoginForm(): JSX.Element {
         } catch(e) {
             console.log(e, "error".padEnd(30, "_"))
         }
-           
-
     }
     return (
     <form onSubmit={handleSubmit}>
