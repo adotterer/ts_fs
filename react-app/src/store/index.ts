@@ -3,6 +3,7 @@ import { createStore, combineReducers, applyMiddleware, compose, StoreEnhancer }
 import * as createLogger from 'redux-logger';
 import thunk from 'redux-thunk';
 import modal, { modalState } from './modal';
+import user
 
 export interface AppState extends DefaultRootState {
   modal: modalState;

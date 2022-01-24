@@ -5,7 +5,7 @@ const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
 
 export type sessionState = {
-    username: string
+    user: any
 }
 
 export type sessionAction = {
@@ -41,4 +41,24 @@ export const login = ({email, password}: credentials) => async (dispatch: Dispat
     })
     console.log(await res.json(), "hey")
     return res
+}
+
+export default function reducer(
+    state: sessionState = {user: null}, 
+    {type, user}: sessionAction
+): sessionState {
+    switch(type) {
+        case SET_USER:
+            return {
+                ...state,
+                user
+            };
+        case REMOVE_USER:
+            return {
+                ...state,
+                user: null
+            };
+        default: 
+            return state
+    }
 }
