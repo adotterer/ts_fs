@@ -15,18 +15,19 @@ function TestModal(): JSX.Element {
 function TestApp(): JSX.Element {
     const dispatch = useDispatch();
     dispatch(SetModalCurrent(TestModal))
-    return  <div>
-    <button
-        onClick={() => dispatch(ShowModal())}
-    >
-        Open Modal
-    </button>
-    <button
-        onClick={() => dispatch(HideModal())}
-    >
-        Close Button
-    </button>
-    </div>
+    return  (
+    <div>
+        <button
+            onClick={() => dispatch(ShowModal())}
+        >
+            Open Modal
+        </button>
+        <button
+            onClick={() => dispatch(HideModal())}
+        >
+            Close Button
+        </button>
+    </div>)
 }
 
 function Test(): JSX.Element {
@@ -40,7 +41,7 @@ function Test(): JSX.Element {
 
 describe("Modal", () => {
     test("should appear when you dispatch ShowModal", () => {
-        const {container} = render(<Test />);
+        render(<Test />);
         const openButton = screen.getByRole("button", {name: /Open/i})
         openButton.click();
         expect(screen.getByText("Hello from Modal")).toBeInTheDocument()
