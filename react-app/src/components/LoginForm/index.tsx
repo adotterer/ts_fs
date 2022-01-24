@@ -9,7 +9,7 @@ export default function LoginForm(): JSX.Element {
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const sessionUser = useSelector((state: AppState) => state.session.user)
-    if (sessionUser) return <Redirect to="/" />
+    // if (sessionUser) return <Redirect to="/" />
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();

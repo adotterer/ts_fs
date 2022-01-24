@@ -3,21 +3,19 @@ import {Route, Switch} from 'react-router-dom';
 import LoginForm from "./components/LoginForm";
 import "./main.css";
 
-export default function App(): JSX.Element {
+export default function App(){
   return (
-    <div className='bg-black h-screen w-screen'>
-      <span className='font-extrabold text-3xl text-white'>
-        
-        <Switch>
-          <Route path="/" exact={true}>
-            /
-          </Route>
-          <Route path="/login">
-            <LoginForm />
-          </Route>
-
-        </Switch>
-      </span>
-    </div>
+  
+        <div>
+          <Switch>
+            <Route path="/login">
+              {/* <LoginForm /> */}
+              fuck off
+            </Route>
+            <Route path="/" exact>
+              hello
+            </Route>
+          </Switch>
+        </div>
   );
 }

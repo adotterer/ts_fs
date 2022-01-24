@@ -5,7 +5,8 @@ module.exports = {
   entry: './src/index.tsx',
   output: {
     filename: 'main.js',
-    path: resolve(__dirname, 'build')
+    path: resolve(__dirname, 'build'),
+    publicPath: "/"
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -17,6 +18,7 @@ module.exports = {
     extensions: ['*', '.js', '.jsx', '.tsx', '.ts']
   },
   devServer: {
+    historyApiFallback: true,
     proxy: {
       "/": {
         target: 'http://localhost:5050',
@@ -43,5 +45,6 @@ module.exports = {
         use: ['file-loader']
       }
     ]
-  }
+  },
+  
 };
