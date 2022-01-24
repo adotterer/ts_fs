@@ -30,10 +30,10 @@ function TestApp(): JSX.Element {
     </div>)
 }
 
-function Test(): JSX.Element {
+export function Test({children}: {children: JSX.Element}): JSX.Element {
     return (
         <Provider store={ store }>
-           <TestApp />
+           {children}
             <Modal />
         </Provider>
         )
@@ -41,7 +41,7 @@ function Test(): JSX.Element {
 
 describe("Modal", () => {
     test("should appear when you dispatch ShowModal", () => {
-        render(<Test />);
+        render(<Test><TestApp /></Test>);
         const openButton = screen.getByRole("button", {name: /Open/i})
         openButton.click();
         expect(screen.getByText("Hello from Modal")).toBeInTheDocument()
