@@ -1,5 +1,5 @@
 import React from "react"
-import {render, fireEvent, screen} from '@testing-library/react'
+import {render, screen} from '@testing-library/react'
 import {Provider, useDispatch} from "react-redux";
 import { ShowModal, HideModal, SetModalCurrent} from "../modal"
 import Modal from '../../components/Modal';
