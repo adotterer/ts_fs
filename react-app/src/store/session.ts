@@ -29,7 +29,7 @@ const removeUser = (): sessionAction => ({
     type: REMOVE_USER
 })
 
-export const login = ({email, password}: credentials) => async (dispatch: Dispatch<sessionAction>) => {
+export const login = ({email, password}: credentials) => async (dispatch: Dispatch<sessionAction>): Promise<Response>=> {
     const res = await csrfFetch("/login", {
         method: "POST",
         body: JSON.stringify({
@@ -37,7 +37,8 @@ export const login = ({email, password}: credentials) => async (dispatch: Dispat
             password, 
         })
     })
-    console.log(await res.json(), "login response.json()")
+    // console.log(await res.json(), "login response.json()")
+    dispatch(setUser(res))
     return res
 }
 
