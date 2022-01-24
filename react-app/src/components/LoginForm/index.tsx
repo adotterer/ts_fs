@@ -12,11 +12,11 @@ export default function LoginForm(): JSX.Element {
 
     const handleSubmit = (e: FormEvent) => {
         
-        return dispatch(sessionActions.login({email, password}))
-            .catch(async (res: Response) => {
-                const data = await res.json();
-            })
-
+        try { dispatch(sessionActions.login({email, password}))
+        } catch(e) {
+            console.log(e, "error".padEnd(30, "_"))
+        }
+           
 
     }
     return (<form onSubmit={handleSubmit}></form>)
