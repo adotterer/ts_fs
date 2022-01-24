@@ -39,7 +39,7 @@ export const login = ({email, password}: credentials) => async (dispatch: Dispat
             password, 
         })
     })
-    console.log(await res.json(), "hey")
+    console.log(await res.json(), "login response.json()")
     return res
 }
 
