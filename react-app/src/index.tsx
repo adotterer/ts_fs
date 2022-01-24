@@ -23,7 +23,6 @@ const Root: React.FC = () => (
 );
 
 const store = configureStore({});
-// const store = configureStore(null);
 
 if(process.env.NODE_ENV !== "production") {
   restoreCSRF();

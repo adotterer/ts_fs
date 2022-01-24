@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route, Switch} from 'react-router-dom';
+import {Route, Switch, Link} from 'react-router-dom';
 import LoginForm from "./components/LoginForm";
 import "./main.css";
 
@@ -10,11 +10,14 @@ export default function App(){
           <Switch>
             <Route path="/login">
               {/* <LoginForm /> */}
-              fuck off
+              da fuck
             </Route>
             <Route path="/" exact>
               hello
+              <br />
+              <Link to="/login">Login</Link>
             </Route>
+          
           </Switch>
         </div>
   );
