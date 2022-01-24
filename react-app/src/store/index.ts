@@ -3,14 +3,16 @@ import { createStore, combineReducers, applyMiddleware, compose, StoreEnhancer }
 import * as createLogger from 'redux-logger';
 import thunk from 'redux-thunk';
 import modal, { modalState } from './modal';
-import user
+import session, {sessionState} from "./session"
 
 export interface AppState extends DefaultRootState {
   modal: modalState;
+  user: sessionState;
 }
 
 const rootReducer = combineReducers({
-  modal
+  modal, 
+  session
 });
 
 let enhancer: StoreEnhancer;
