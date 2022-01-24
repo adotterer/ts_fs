@@ -7,7 +7,7 @@ import session, {sessionState} from "./session"
 
 export interface AppState extends DefaultRootState {
   modal: modalState;
-  user: sessionState;
+  session: sessionState;
 }
 
 const rootReducer = combineReducers({

@@ -25,8 +25,6 @@ const setUser = (user: any): sessionAction => ({
 })
 
 
-
-
 const removeUser = (): sessionAction => ({
     type: REMOVE_USER
 })

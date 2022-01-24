@@ -23,7 +23,8 @@ const Root: React.FC = () => (
   </BrowserRouter>
 );
 
-const store = configureStore(undefined);
+// const store = configureStore({modal: null, session: null});
+const store = configureStore(null);
 
 if(process.env.NODE_ENV !== "production") {
   restoreCSRF();
