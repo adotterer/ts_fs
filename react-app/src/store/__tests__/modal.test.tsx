@@ -31,7 +31,7 @@ describe("Modal", () => {
         render(<TestComponent><TestApp /></TestComponent>);
         const openButton = screen.getByRole("button", {name: /Open/i})
         openButton.click();
-        expect(screen.getByText("Hello from Modal")).toBeInTheDocument()
+        expect(screen.getByText(/Hello/i)).toBeInTheDocument()
     })
     test("should close on dispatch HideModal", () => {
         render(<TestComponent><TestApp /></TestComponent>);
@@ -39,6 +39,6 @@ describe("Modal", () => {
         const closeButton = screen.getByRole("button", {name: /Close/i})
         openButton.click();
         closeButton.click();
-        expect(screen.getByText("Hello from Modal")).toBeInTheDocument()
+        expect(screen.queryByText("Hello from Modal")).not.toBeInTheDocument()
     })
 })
