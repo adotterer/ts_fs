@@ -12,7 +12,8 @@ export default function LoginForm(): JSX.Element {
 
     const handleSubmit = (e: FormEvent) => {
         
-        try { dispatch(sessionActions.login({email, password}))
+        try { 
+            dispatch(sessionActions.login({email, password}))
         } catch(e) {
             console.log(e, "error".padEnd(30, "_"))
         }
