@@ -62,8 +62,8 @@ app.get("/protect", protect, (req, res) => {
   res.send({msg: "What's up"})
 });
 
-app.post("/signup", signup);
-app.post("/signin", signin);
+app.post("/api/signup", signup);
+app.post("/api/signin", signin);
 
 if (isProduction) {
 

@@ -30,7 +30,7 @@ const removeUser = (): sessionAction => ({
 })
 
 export const login = ({email, password}: credentials) => async (dispatch: Dispatch<sessionAction>): Promise<any>=> {
-    const res = csrfFetch("/login", {
+    const res = csrfFetch("/api/login", {
         method: "POST",
         body: JSON.stringify({
             email,
