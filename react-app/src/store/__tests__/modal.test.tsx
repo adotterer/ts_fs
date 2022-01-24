@@ -27,11 +27,18 @@ function TestApp(): JSX.Element {
 }
 
 describe("Modal", () => {
-    test("should appear when you dispatch ShowModal", () => {
+    test("should appear on dispatch ShowModal", () => {
         render(<TestComponent><TestApp /></TestComponent>);
         const openButton = screen.getByRole("button", {name: /Open/i})
         openButton.click();
         expect(screen.getByText("Hello from Modal")).toBeInTheDocument()
-
+    })
+    test("should close on dispatch HideModal", () => {
+        render(<TestComponent><TestApp /></TestComponent>);
+        const openButton = screen.getByRole("button", {name: /Open/i})
+        const closeButton = screen.getByRole("button", {name: /Close/i})
+        openButton.click();
+        closeButton.click();
+        expect(screen.getByText("Hello from Modal")).toBeInTheDocument()
     })
 })
