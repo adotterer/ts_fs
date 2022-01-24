@@ -11,12 +11,22 @@ export type sessionAction = {
     type: string,
     user?: any
 }
+
+export type credentials = {
+    email: string,
+    password: string
+}
+
 const setUser = (user: any): sessionAction => ({
-        type: SET_USER,
-        user
-    })
+    type: SET_USER,
+    user
+})
 
 
 const removeUser = (): sessionAction => ({
     type: REMOVE_USER
 })
+
+export const login = ({email, password}: credentials) => async (dispatch) => {
+
+}
