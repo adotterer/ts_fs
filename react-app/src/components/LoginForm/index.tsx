@@ -10,9 +10,9 @@ export default function LoginForm(): JSX.Element {
     const [email, setEmail] = useState("");
     const sessionUser = useSelector((state: AppState) => state.session.user)
     if (sessionUser) return <Redirect to="/" />
-    
+
     const handleSubmit = (e: FormEvent) => {
-        
+        e.preventDefault();
         try { 
             dispatch(sessionActions.login({email, password}))
         } catch(e) {
