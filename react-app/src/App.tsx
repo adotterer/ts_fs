@@ -9,8 +9,7 @@ export default function App(){
         <div>
           <Switch>
             <Route path="/login">
-              {/* <LoginForm /> */}
-              da fuck
+              <LoginForm />
             </Route>
             <Route path="/" exact>
               hello
