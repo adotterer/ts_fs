@@ -1,7 +1,7 @@
-sudo rm -rf /Library/Developer/CommandLineTools &&
-sudo xcode-select --install
+# TypeScript FullStack MERN Template
 
-## Planned Dependencies:
+
+## Dependencies:
 
 - [x] `body-parser` - body parser
 - [x] `bcryptjs` - password hashing
@@ -29,10 +29,10 @@ https://www.youtube.com/watch?v=4crXgQZG4W8
 # Test in Development
 
 `npm run test -- --watch`
-
+<!-- 
 # Test POST routes in Postman
 
 1. Make a GET request to the server
 2. copy the XSRF token set in the cookie 
 3. put token in the header `XSRF-TOKEN` for you next POST request
-4. any requests in between will invalidate the token, so you must repeat this pattern for every request
+4. any requests in between will invalidate the token, so you must repeat this pattern for every request -->
