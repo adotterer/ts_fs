@@ -1,5 +1,6 @@
 # TypeScript FullStack MERN Template
 
+There's even tests 🤯
 
 ## Dependencies:
 
