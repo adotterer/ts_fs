@@ -1,7 +1,5 @@
 # TypeScript FullStack MERN Template
 
-There's even tests 🤯
-
 ## Dependencies:
 
 - [x] `body-parser` - body parser
